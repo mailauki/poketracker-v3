@@ -1,11 +1,12 @@
 'use client'
 
-import { Button, Card, CardContent, Stack, Typography } from "@mui/material"
+import { Button, ButtonGroup, Card, CardContent, Stack, Tab, Tabs, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
+import PokeCard from "./card"
 
 export default function Pokedex({ slug }) {
   const [versionGroups, setVersionGroups] = useState([])
-  const [version, setVersion] = useState('')
+  const [version, setVersion] = useState({name: '', url: ''})
   const [pokedex, setPokedex] = useState([])
 
   useEffect(() => {
@@ -13,11 +14,12 @@ export default function Pokedex({ slug }) {
     .then((res) => res.json())
     .then((data) => {
       setVersionGroups(data.version_groups)
-      console.log(data.version_groups[0].url)
+      setVersion(data.version_groups[0])
+      // console.log(data.version_groups[0].url)
       fetch(data.version_groups[0].url)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.pokedexes[0].url)
+        console.log(data.pokedexes)
         fetch(data.pokedexes[0].url)
         .then((res) => res.json())
         .then((data) => {
@@ -28,36 +30,36 @@ export default function Pokedex({ slug }) {
     })
   }, [])
 
-  // useEffect(() => {
-  //   f
-  // }, [version])
+  useEffect(() => {
+    fetch(version.url)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.pokedexes.find((dex)  => dex.name === version.name))
+      })
+  }, [version])
 
-  console.log(pokedex)
-  console.log(version)
+  // console.log(pokedex)
+  // console.log(version)
 
   return (
     <>
       {/* <Typography>{}</Typography> */}
-      {versionGroups.map((versionGroup) => 
-        <Button
-          key={versionGroup.name}
-          onClick={() => {
-            // console.log(versionGroup.url)
-            setVersion(versionGroup.url)
-          }}
-        >
-          {versionGroup.name}
-        </Button>
-      )}
+      <Tabs value={version.name}>
+        {versionGroups.map((versionGroup) => 
+          <Tab
+            key={versionGroup.name}
+            onClick={() => {
+              // console.log(versionGroup.url)
+              setVersion(versionGroup)
+            }}
+            value={versionGroup.name}
+            label={versionGroup.name}
+          />
+        )}
+      </Tabs>
       <Stack direction='row' flexWrap='wrap' useFlexGap gap={3} justifyContent='center'>
         {pokedex.map((pokemon) => 
-          <Card sx={{ width: 200 }} key={pokemon.entry_number}>
-            <CardContent>
-              <Typography>
-                {pokemon.pokemon_species.name}
-              </Typography>
-            </CardContent>
-          </Card>
+          <PokeCard pokemon={pokemon} version={version} key={pokemon.entry_number} />
         )}
       </Stack>
       {/* {console.log(pokedex.descriptions[0].description)} */}

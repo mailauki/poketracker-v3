@@ -1,4 +1,3 @@
-import VersionGroups from "@/app/components/version_groups"
 import Pokedex from "@/app/components/pokedex"
 
 export default function GenPage({ params }: { params: { slug: string } }) {
