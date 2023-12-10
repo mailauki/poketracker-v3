@@ -19,11 +19,12 @@ export default function PokeCard({ pokemon, version }) {
       .then((res) => res.json())
       .then((data) => setSprites(data.sprites))
     })
-  }, [])
+  }, [pokemon.pokemon_species.url])
 
   // console.log(sprites.versions['generation-iii'][version.name].front_default)
   // console.log(params.slug)
-  // console.log(version.name)
+  // console.log(version)
+  // console.log(sprites)
 
   return (
     <Card sx={{ width: 220 }}>
@@ -38,26 +39,10 @@ export default function PokeCard({ pokemon, version }) {
       />
       <CardMedia
         component="img"
-        // height="100"
         sx={{ width: 100, mx: 'auto' }}
         image={sprites.front_default}
-        // image={sprites.versions['generation-vii'][version.name].front_default || sprites.front_default}
         alt={pokemon.pokemon_species.name}
       />
-      {/* <CardContent>
-        <img
-          src={sprites.front_default}
-          alt={pokemon.pokemon_species.name}
-          loading='lazy'
-          width={100}
-          height={100}
-        />
-        <Typography variant="h5">
-          {pokemon.pokemon_species.name}
-        </Typography>
-        <Typography>{padZero(pokemon.entry_number)}</Typography>
-
-      </CardContent> */}
     </Card>
   )
 }
