@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import styles from './page.module.css'
-import Wrapper from './components/wrapper'
+import Menu from './components/menu'
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <Wrapper />
+      <Menu />
       {/* <div className={styles.description}>
         <p>
           Get started by editing&nbsp;

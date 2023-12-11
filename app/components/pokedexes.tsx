@@ -31,7 +31,7 @@ export default function Pokedexes({ slug }) {
     })
   }, [pokedex])
 
-  if(!pokemonEntries) return <h1>Loading...</h1>
+  if(!pokemonEntries) return <h1>Nothing Found</h1>
 
   return (
     <>
