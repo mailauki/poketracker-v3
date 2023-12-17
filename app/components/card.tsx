@@ -1,8 +1,9 @@
-import { Card, CardHeader, CardMedia, IconButton } from "@mui/material"
+import { Avatar, Card, CardHeader, CardMedia, IconButton, SvgIcon } from "@mui/material"
 import padZero from "../utils/padZero"
 import { useEffect, useState } from "react"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import { PokeProps, Sprites } from "../utils/pokeTypes"
+import Image from "next/image"
 
 export default function PokeCard({ pokemon }: PokeProps) {
   const [sprites, setSprites] = useState<Sprites | undefined>(undefined)
@@ -23,7 +24,17 @@ export default function PokeCard({ pokemon }: PokeProps) {
       <CardHeader
         action={
           <IconButton aria-label="captured">
-            <MoreVertIcon />
+            {/* <MoreVertIcon /> */}
+            {/* <Avatar
+              src="/pokeball.svg"
+              sx={{ width: 32, height: 32 }}
+            /> */}
+            <Image
+              src="/pokeball.svg"
+              width={32}
+              height={32}
+              alt="pokeball"
+            />
           </IconButton>
         }
         title={pokemon.pokemon_species.name}
