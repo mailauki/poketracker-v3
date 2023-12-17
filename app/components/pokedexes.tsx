@@ -3,11 +3,12 @@
 import { Divider, Stack, Tab, Tabs } from "@mui/material"
 import { useEffect, useState } from "react"
 import PokeCard from "./card"
+import { Pokedex, Pokemon } from "../utils/pokeTypes"
 
-export default function Pokedexes({ slug }) {
-  const [pokedexes, setPokedexes] = useState([])
-  const [pokedex, setPokedex] = useState('')
-  const [pokemonEntries, setPokemonEntries] = useState([])
+export default function Pokedexes({ slug }: { slug: string }) {
+  const [pokedexes, setPokedexes] = useState<Array<Pokedex>>([])
+  const [pokedex, setPokedex] = useState<string>('')
+  const [pokemonEntries, setPokemonEntries] = useState<Array<Pokemon>>([])
 
   useEffect(() => {
     fetch(`https://pokeapi.co/api/v2/version-group/${slug}`)
@@ -53,7 +54,6 @@ export default function Pokedexes({ slug }) {
           <PokeCard
             key={pokemon.entry_number}
             pokemon={pokemon}
-            version={pokedex}
           />
         )}
       </Stack>

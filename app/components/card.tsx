@@ -1,30 +1,22 @@
-import { Card, CardContent, CardHeader, CardMedia, IconButton, Typography } from "@mui/material"
+import { Card, CardHeader, CardMedia, IconButton } from "@mui/material"
 import padZero from "../utils/padZero"
 import { useEffect, useState } from "react"
-import Image from "next/image"
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import { useParams } from "next/navigation"
+import MoreVertIcon from "@mui/icons-material/MoreVert"
+import { PokeProps, Sprites } from "../utils/pokeTypes"
 
-export default function PokeCard({ pokemon, version }) {
-  const params = useParams()
-  const [sprites, setSprites] = useState([])
-  // console.log(pokemon)
+export default function PokeCard({ pokemon }: PokeProps) {
+  const [sprites, setSprites] = useState<Sprites | undefined>(undefined)
+
   useEffect(() => {
     fetch(pokemon.pokemon_species.url)
     .then((res) => res.json())
     .then((data) => {
       // console.log(data.evolution_chain.url)
-      // console.log(data.varieties[0].pokemon.url)
       fetch(data.varieties[0].pokemon.url)
       .then((res) => res.json())
       .then((data) => setSprites(data.sprites))
     })
   }, [pokemon.pokemon_species.url])
-
-  // console.log(sprites.versions['generation-iii'][version.name].front_default)
-  // console.log(params.slug)
-  // console.log(version)
-  // console.log(sprites)
 
   return (
     <Card sx={{ width: 220 }}>
@@ -40,7 +32,7 @@ export default function PokeCard({ pokemon, version }) {
       <CardMedia
         component="img"
         sx={{ width: 100, mx: 'auto' }}
-        image={sprites.front_default}
+        image={sprites?.front_default}
         alt={pokemon.pokemon_species.name}
       />
     </Card>
