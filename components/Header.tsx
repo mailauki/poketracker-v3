@@ -1,7 +1,7 @@
 'use client'
 
-import { Menu as MenuIcon } from "@mui/icons-material"
-import { AppBar, Button, Drawer, IconButton, Toolbar, Typography } from "@mui/material"
+import { ArrowBackIosNew, ChevronLeft, Menu as MenuIcon } from "@mui/icons-material"
+import { AppBar, Box, Button, Drawer, IconButton, Toolbar, Typography } from "@mui/material"
 import { useState } from "react"
 import { useParams } from "next/navigation"
 import Nav from "./Nav"
@@ -22,17 +22,29 @@ export default function Header() {
 
   return (
     <>
-      <AppBar>
+      <AppBar sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            edge='start'
-            onClick={handleDrawerOpen}
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton>
+          {!open ? (
+            <IconButton
+              color='inherit'
+              aria-label='open drawer'
+              edge='start'
+              onClick={handleDrawerOpen}
+              sx={{ mr: 2 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          ) : (
+            <IconButton
+              color='inherit'
+              aria-label='open drawer'
+              edge='start'
+              onClick={handleDrawerClose}
+              sx={{ mr: 2 }}
+            >
+              <ArrowBackIosNew />
+            </IconButton>
+          )}
           <Typography
             variant='h6'
             noWrap
@@ -59,7 +71,13 @@ export default function Header() {
         onClose={handleDrawerClose}
       >
         <Toolbar />
-        <Nav />
+        <Box
+          onClick={handleDrawerClose}
+          onKeyDown={handleDrawerClose}
+          sx={{ overflow: 'auto' }}
+        >
+          <Nav />
+        </Box>
       </Drawer>
     </>
   );

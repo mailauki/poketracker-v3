@@ -1,6 +1,6 @@
 'use client'
 
-import { Divider, List, ListItemButton, ListItemText } from "@mui/material"
+import { Box, Divider, List, ListItemButton, ListItemText } from "@mui/material"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Game } from "../utils/types"
@@ -15,7 +15,7 @@ export default function Nav() {
   }, [])
 
   return (
-    <List>
+    <List sx={{ mb: 4 }}>
       <ListItemButton
         component={Link}
         href="/"

@@ -36,7 +36,11 @@ export default function Pokedexes({ slug }: { slug: string }) {
 
   return (
     <>
-      <Tabs value={pokedex}>
+      <Tabs
+        value={pokedex}
+        textColor='secondary'
+        indicatorColor='secondary'
+      >
         {pokedexes.map((pokedex) => 
           <Tab
             key={pokedex.name}
