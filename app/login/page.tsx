@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { headers, cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
-import { Auth } from '@supabase/auth-ui-react'
+// import { Auth } from '@supabase/auth-ui-react'
 import { Button, Container, Stack, TextField, Toolbar, Typography } from '@mui/material'
 import { ChevronLeft } from '@mui/icons-material'
 

@@ -8,6 +8,8 @@ export default async function Profile() {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
   const { data: profiles } = await supabase.from('profiles').select()
+  const { data, error } = await supabase.auth.getSession()
+  // const { session, user } = data
   // const [profiles, setProfiles] = useState<any[] | null>(null)
   // const supabase = createClient()
 
@@ -18,7 +20,9 @@ export default async function Profile() {
   //   }
   //   getData()
   // }, [supabase])
+  // const { data: { user } } = await supabase.auth.getUser()
+
   return (
-    <pre>{JSON.stringify(profiles, null, 2)}</pre>
+    <pre>{JSON.stringify(data, null, 2)}</pre>
   )
 }

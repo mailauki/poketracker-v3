@@ -6,6 +6,7 @@ import { useState } from "react"
 import { useParams } from "next/navigation"
 import Nav from "./Nav"
 import Link from "next/link"
+import SignOut from "./SignOutBtn"
 
 export default function Header() {
   const params = useParams()
@@ -39,7 +40,7 @@ export default function Header() {
             component='div'
             sx={{ flexGrow: 1 }}
           >
-            {params.slug}
+            {params.slug || "PokéTracker"}
           </Typography>
 
           <Button
@@ -50,6 +51,7 @@ export default function Header() {
           >
             Login
           </Button>
+          {/* <SignOut /> */}
         </Toolbar>
       </AppBar>
       <Drawer
