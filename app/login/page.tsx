@@ -68,42 +68,38 @@ export default function Login({
     <>
       <Toolbar />
 
-      <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2" style={{ display: 'flex', paddingLeft: '1em', paddingRight: '1em', justifyContent: 'center' }}>
+      <div style={{ display: 'flex', padding: '1em', justifyContent: 'center' }}>
         <form
-          className="animate-in flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
           style={{ display: 'flex', flexDirection: 'column', width: '50%', justifyContent: 'center', gap: '1em' }}
           action={signIn}
         >
-          <label className="text-md" htmlFor="email">
+          <label htmlFor="email">
             Email
           </label>
           <input
-            className="rounded-md px-4 py-2 bg-inherit border mb-6"
             name="email"
             placeholder="you@example.com"
             required
           />
-          <label className="text-md" htmlFor="password">
+          <label htmlFor="password">
             Password
           </label>
           <input
-            className="rounded-md px-4 py-2 bg-inherit border mb-6"
             type="password"
             name="password"
             placeholder="••••••••"
             required
           />
-          <button className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2">
+          <button>
             Sign In
           </button>
           <button
             formAction={signUp}
-            className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
           >
             Sign Up
           </button>
           {searchParams?.message && (
-            <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
+            <p>
               {searchParams.message}
             </p>
           )}
@@ -114,6 +110,8 @@ export default function Login({
         startIcon={<ChevronLeft />}
         component={Link}
         href='/'
+        color='secondary'
+        sx={{ ml: 2, mt: 2 }}
       >
         Back
       </Button>
@@ -129,22 +127,26 @@ export default function Login({
             label='Email'
             type='text'
             name='email'
+            color='secondary'
             required
           />
           <TextField
             label='Password'
             type='password'
             name='password'
+            color='secondary'
             required
           />
           <Button
             variant='contained'
+            color='secondary'
             type='submit'
           >
             Sign In
           </Button>
           <Button
             variant='outlined'
+            color='secondary'
             type='submit'
             formAction={signUp}
           >

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Header from '../components/Header'
-// import './globals.css'
+import './globals.css'
 // import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
 import Theme from '@/utils/theme'
 
@@ -18,13 +18,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Theme>
+    <Theme>
+      <html lang="en">
+        <body className={inter.className}>
           <Header />
           {children}
-        </Theme>
-      </body>
-    </html>
+        </body>
+      </html>
+    </Theme>
   )
 }
