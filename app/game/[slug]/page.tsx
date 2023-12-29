@@ -1,10 +1,12 @@
-import Pokedexes from "@/app/components/pokedexes"
+import Pokedexes from "@/components/Pokedexes"
+import { Toolbar } from "@mui/material"
 
 export default function GenPage({ params }: { params: { slug: string } }) {
   
   return (
     <>
-      <h1>Game {params.slug}</h1>
+      <Toolbar />
+      {/* <h1>Game {params.slug}</h1> */}
       <Pokedexes slug={params.slug} />
     </>
   )

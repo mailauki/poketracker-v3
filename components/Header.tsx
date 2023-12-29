@@ -1,10 +1,11 @@
 'use client'
 
 import { Menu as MenuIcon } from "@mui/icons-material"
-import { AppBar, Drawer, IconButton, Toolbar, Typography } from "@mui/material"
+import { AppBar, Button, Drawer, IconButton, Toolbar, Typography } from "@mui/material"
 import { useState } from "react"
-import Menu from "./menu"
 import { useParams } from "next/navigation"
+import Nav from "./Nav"
+import Link from "next/link"
 
 export default function Header() {
   const params = useParams()
@@ -23,17 +24,32 @@ export default function Header() {
       <AppBar>
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
+            color='inherit'
+            aria-label='open drawer'
+            edge='start'
             onClick={handleDrawerOpen}
             sx={{ mr: 2 }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap textTransform="uppercase">
+          <Typography
+            variant='h6'
+            noWrap
+            textTransform='uppercase'
+            component='div'
+            sx={{ flexGrow: 1 }}
+          >
             {params.slug}
           </Typography>
+
+          <Button
+            color='inherit'
+            aria-label='login'
+            component={Link}
+            href='/login'
+          >
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -41,7 +57,7 @@ export default function Header() {
         onClose={handleDrawerClose}
       >
         <Toolbar />
-        <Menu />
+        <Nav />
       </Drawer>
     </>
   );

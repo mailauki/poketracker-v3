@@ -1,11 +1,11 @@
 'use client'
 
-import { List, ListItemButton, ListItemText } from "@mui/material"
+import { Divider, List, ListItemButton, ListItemText } from "@mui/material"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { Game } from "../utils/pokeTypes"
+import { Game } from "../utils/types"
 
-export default function Menu() {
+export default function Nav() {
   const [games, setGames] = useState<Array<Game>>([])
 
   useEffect(() => {
@@ -16,6 +16,13 @@ export default function Menu() {
 
   return (
     <List>
+      <ListItemButton
+        component={Link}
+        href="/"
+      >
+        <ListItemText primary="home" />
+      </ListItemButton>
+      <Divider />
       {games.map(game => 
         <ListItemButton
           key={game.name}
