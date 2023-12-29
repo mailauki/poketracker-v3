@@ -1,7 +1,13 @@
+import { Metadata } from "next"
 import Pokedexes from "@/components/Pokedexes"
 import { Toolbar } from "@mui/material"
 
-export default function GenPage({ params }: { params: { slug: string } }) {
+export const metadata: Metadata = {
+  title: 'Game',
+  // title: `Game ${params.slug}`,
+}
+
+export default function GamePage({ params }: { params: { slug: string } }) {
   
   return (
     <>
