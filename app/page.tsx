@@ -21,23 +21,13 @@ export const metadata: Metadata = {
 }
 
 export default function Home() {
-  // const getUser = async () => {
-  //   'use server'
-
-  //   const cookieStore = cookies()
-  //   const supabase = createClient(cookieStore)
-
-  //   const { data: { user } } = await supabase.auth.getUser()
-  //   return user
-  // }
 
   return (
     <main className={styles.main}>
       <Typography variant="h1">PokéTracker</Typography>
-      {/* <Nav /> */}
+
       <Profile />
       {/* {console.log()} */}
-      {/* <SignOut /> */}
       <footer></footer>
     </main>
   )

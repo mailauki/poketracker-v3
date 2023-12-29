@@ -1,12 +1,16 @@
 'use client'
 
-import { Box, Divider, List, ListItemButton, ListItemText } from "@mui/material"
+import { Box, Divider, List, ListItemButton, ListItemText, Tab, Tabs, useTheme } from "@mui/material"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Game } from "../utils/types"
+import { usePathname } from "next/navigation"
 
 export default function Nav() {
   const [games, setGames] = useState<Array<Game>>([])
+  const pathname = usePathname()
+  const [tab, setTab] = useState<string>(pathname)
+  const theme = useTheme()
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/version-group?limit=27")
@@ -14,24 +18,54 @@ export default function Nav() {
     .then((data) => setGames(data.results))
   }, [])
 
+  useEffect(() => {
+    setTab(pathname)
+  }, [pathname])
+
   return (
-    <List sx={{ mb: 4 }}>
-      <ListItemButton
-        component={Link}
-        href="/"
+    <>
+      <Tabs
+        value={tab}
+        orientation='vertical'
+        sx={{ mt: 0.5, mb: 4 }}
       >
-        <ListItemText primary="home" />
-      </ListItemButton>
-      <Divider />
-      {games.map(game => 
-        <ListItemButton
-          key={game.name}
+        <Tab
           component={Link}
-          href={`/game/${game.name}`}
+          href='/'
+          value='/'
+          label='home'
+          sx={{ alignItems: 'flex-start', '&:hover': { bgcolor: theme.palette.action.hover } }}
+        />
+        <Divider />
+        {games.map((game) => 
+          <Tab
+            key={game.name}
+            component={Link}
+            href={`/game/${game.name}`}
+            value={`/game/${game.name}`}
+            label={game.name}
+            sx={{ alignItems: 'flex-start', '&:hover': { bgcolor: theme.palette.action.hover } }}
+          />
+        )}
+      </Tabs>
+      {/* <List sx={{ mb: 4 }}>
+        <ListItemButton
+          component={Link}
+          href="/"
         >
-          <ListItemText primary={game.name} />
+          <ListItemText primary="home" />
         </ListItemButton>
-      )}
-    </List>
+        <Divider />
+        {games.map(game => 
+          <ListItemButton
+            key={game.name}
+            component={Link}
+            href={`/game/${game.name}`}
+          >
+            <ListItemText primary={game.name} />
+          </ListItemButton>
+        )}
+      </List> */}
+    </>
   )
 }
