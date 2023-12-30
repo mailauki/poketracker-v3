@@ -1,34 +1,41 @@
-import { Button } from "@mui/material"
+'use client'
 
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
+import { Button } from '@mui/material'
+import Link from 'next/link'
 
-const signOut = async () => {
-  'use server'
 
-  const cookieStore = cookies()
-  const supabase = createClient(cookieStore)
+// import { createClient } from '@/utils/supabase/server'
+// import { cookies } from 'next/headers'
+// import { redirect } from 'next/navigation'
 
-  const { error } = await supabase.auth.signOut()
+// const signOut = async () => {
+//   'use server'
 
-  if (error) {
-    return redirect('/login?message=Could not sign out')
-  }
+//   const cookieStore = cookies()
+//   const supabase = createClient(cookieStore)
 
-  return redirect('/login?message=Successfully signed out')
-}
+//   const { error } = await supabase.auth.signOut()
+
+//   if (error) {
+//     return redirect('/login?message=Could not sign out')
+//   }
+
+//   return redirect('/login?message=Successfully signed out')
+// }
 
 export default function SignOut() {
-
   return (
-    // <Button
-    //   color='inherit'
-    //   aria-label='sign out'
-    //   onClick={signOut}
-    // >
-    //   Sign Out
-    // </Button>
-    <button>Sign Out</button>
+    <div>
+      <form action='/auth/signout' method='post'>
+        <Button
+          type='submit'
+          variant='outlined'
+          color='secondary'
+          aria-label='sign out'
+        >
+          Sign Out
+        </Button>
+      </form>
+    </div>
   )
 }

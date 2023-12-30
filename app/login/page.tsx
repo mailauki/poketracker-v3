@@ -3,9 +3,7 @@ import { Metadata } from 'next'
 import { headers, cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
-// import { Auth } from '@supabase/auth-ui-react'
-import { Button, Container, Stack, TextField, Toolbar, Typography } from '@mui/material'
-import { ChevronLeft } from '@mui/icons-material'
+import AuthForm from '@/components/AuthForm'
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -23,8 +21,6 @@ export default function Login({
     const password = formData.get('password') as string
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
-
-    console.log({email}, {password})
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -47,8 +43,6 @@ export default function Login({
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    console.log({email}, {password})
-
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -66,9 +60,7 @@ export default function Login({
 
   return (
     <>
-      <Toolbar />
-
-      <div style={{ display: 'flex', padding: '1em', justifyContent: 'center' }}>
+      {/* <div style={{ display: 'flex', padding: '1em', justifyContent: 'center' }}>
         <form
           style={{ display: 'flex', flexDirection: 'column', width: '50%', justifyContent: 'center', gap: '1em' }}
           action={signIn}
@@ -104,9 +96,9 @@ export default function Login({
             </p>
           )}
         </form>
-      </div>
+      </div> */}
 
-      <Button
+      {/* <Button
         startIcon={<ChevronLeft />}
         component={Link}
         href='/'
@@ -141,8 +133,9 @@ export default function Login({
             variant='contained'
             color='secondary'
             type='submit'
+            disabled={pending}
           >
-            Sign In
+            {pending ? "Submitting..." : "Sign In"}
           </Button>
           <Button
             variant='outlined'
@@ -160,8 +153,12 @@ export default function Login({
             </Typography>
           )}
         </Stack>
-      </Container>
-      {/* <Auth supabaseClient={supabase}  /> */}
+      </Container> */}
+      <AuthForm
+        searchParams={searchParams}
+        signIn={signIn}
+        signUp={signUp}
+      />
     </>
   )
 }

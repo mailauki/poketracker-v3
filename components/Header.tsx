@@ -7,6 +7,7 @@ import { useParams } from "next/navigation"
 import Nav from "./Nav"
 import Link from "next/link"
 import SignOut from "./SignOutBtn"
+import { Session } from '@supabase/auth-helpers-nextjs'
 
 export default function Header() {
   const params = useParams()
@@ -63,7 +64,6 @@ export default function Header() {
           >
             Login
           </Button>
-          {/* <SignOut /> */}
         </Toolbar>
       </AppBar>
       <Drawer
