@@ -3,6 +3,7 @@ import styles from "./page.module.css"
 import { Metadata } from 'next'
 // import Nav from "../components/Nav"
 import Profile from "../components/Profile"
+import AuthButton from "@/components/AuthButton"
 // import SignOut from "@/components/SignOutBtn"
 // import { cookies } from 'next/headers'
 // import { createClient } from '@/utils/supabase/server'
@@ -27,6 +28,7 @@ export default function Home() {
       <Typography variant="h1">PokéTracker</Typography>
 
       <Profile />
+      <AuthButton />
       {/* {console.log()} */}
       <footer></footer>
     </main>

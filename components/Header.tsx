@@ -8,6 +8,11 @@ import Nav from "./Nav"
 import Link from "next/link"
 import SignOut from "./SignOutBtn"
 import { Session } from '@supabase/auth-helpers-nextjs'
+import AuthButton from "./AuthButton"
+import Login from "./LoginBtn"
+import { adjustName } from "@/utils/helper"
+
+const drawerWidth = 350
 
 export default function Header() {
   const params = useParams()
@@ -23,7 +28,10 @@ export default function Header() {
 
   return (
     <>
-      <AppBar sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <AppBar
+        position='sticky'
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
         <Toolbar>
           {!open ? (
             <IconButton
@@ -53,9 +61,10 @@ export default function Header() {
             component='div'
             sx={{ flexGrow: 1 }}
           >
-            {params.slug || "PokéTracker"}
+            {adjustName(String(params.slug))}
           </Typography>
 
+          {/* <Login /> */}
           <Button
             color='inherit'
             aria-label='login'
@@ -64,17 +73,28 @@ export default function Header() {
           >
             Login
           </Button>
+          {/* <AuthButton /> */}
         </Toolbar>
       </AppBar>
       <Drawer
         open={open}
         onClose={handleDrawerClose}
+        sx={{
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+        }}
       >
         <Toolbar />
         <Box
           onClick={handleDrawerClose}
           onKeyDown={handleDrawerClose}
-          sx={{ overflow: 'auto' }}
+          // sx={{ overflow: 'auto' }}
+          sx={{
+            flexGrow: 1,
+            bgcolor: 'background.paper',
+            display: 'flex',
+            height: '100%',
+            overflow: 'hidden'
+          }}
         >
           <Nav />
         </Box>

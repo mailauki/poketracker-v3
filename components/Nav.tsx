@@ -5,6 +5,8 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Game } from "../utils/types"
 import { usePathname } from "next/navigation"
+import { Person, Settings } from "@mui/icons-material"
+import { adjustName } from "@/utils/helper"
 
 export default function Nav() {
   const [games, setGames] = useState<Array<Game>>([])
@@ -27,7 +29,9 @@ export default function Nav() {
       <Tabs
         value={tab}
         orientation='vertical'
-        sx={{ mt: 0.5, mb: 4 }}
+        variant='scrollable'
+        // sx={{ mt: 0.5, mb: 4 }}
+        sx={{ width: '100%' }}
       >
         <Tab
           component={Link}
@@ -37,13 +41,39 @@ export default function Nav() {
           sx={{ alignItems: 'flex-start', '&:hover': { bgcolor: theme.palette.action.hover } }}
         />
         <Divider />
+        <Tab
+          component={Link}
+          href='/profile'
+          value='/profile'
+          label='profile'
+          icon={<Person />}
+          iconPosition='start'
+          sx={{
+            justifyContent: 'flex-start',
+            '&:hover': { bgcolor: theme.palette.action.hover }
+          }}
+          disabled
+        />
+        <Tab
+          component={Link}
+          href='/account'
+          value='/account'
+          label='account'
+          icon={<Settings />}
+          iconPosition='start'
+          sx={{
+            justifyContent: 'flex-start',
+            '&:hover': { bgcolor: theme.palette.action.hover }
+          }}
+        />
+        <Divider />
         {games.map((game) => 
           <Tab
             key={game.name}
             component={Link}
             href={`/game/${game.name}`}
             value={`/game/${game.name}`}
-            label={game.name}
+            label={`${adjustName(game.name)}`}
             sx={{ alignItems: 'flex-start', '&:hover': { bgcolor: theme.palette.action.hover } }}
           />
         )}

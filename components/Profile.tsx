@@ -3,6 +3,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import type { Database } from '../utils/types'
 import { useCallback, useEffect, useState } from 'react'
 import SignOut from './SignOutBtn'
+import AuthButton from './AuthButton'
 
 export default async function Profile() {
   // const cookieStore = cookies()
@@ -92,6 +93,9 @@ export default async function Profile() {
     <>
       {/* <pre>{JSON.stringify(session?.user, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(profile, null, 2)}</pre> */}
+      {profile?.username && (
+        <p>{`${profile.username}'s Profile`}</p>
+      )}
       <p>{session?.user.email}</p>
       {/* <TextField
       /> */}
@@ -118,7 +122,8 @@ export default async function Profile() {
         </button>
       </div> */}
 
-      {session ? <SignOut /> : <></>}
+      {/* {session ? <SignOut /> : <></>} */}
+      {/* <AuthButton /> */}
     </>
   )
 }

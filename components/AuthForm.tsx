@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Button, Container, Divider, Stack, TextField, Toolbar, Typography, useTheme } from '@mui/material'
+import { Alert, Button, Container, Divider, Link as Anchor, Stack, TextField, Toolbar, Typography, useTheme } from '@mui/material'
 import { ChevronLeft } from '@mui/icons-material'
 // import { useFormStatus } from 'react-dom'
 import { Auth } from '@supabase/auth-ui-react'
@@ -115,12 +115,17 @@ export default function AuthForm({
           >
             Sign Up
           </Button>
+          {/* <Anchor
+            textAlign='center'
+            color='text.secondary'
+            variant='caption'
+          >
+            {"Don't have an account? Sign Up"}
+          </Anchor> */}
           {searchParams?.message && (
-            <Typography
-              textAlign='center'
-            >
+            <Alert severity='warning'>
               {searchParams.message}
-            </Typography>
+            </Alert>
           )}
         </Stack>
       </Container>
