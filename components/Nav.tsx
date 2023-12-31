@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Game } from "../utils/types"
 import { usePathname } from "next/navigation"
-import { Person, Settings } from "@mui/icons-material"
+import { Person, Settings, CatchingPokemon, Login } from "@mui/icons-material"
 import { adjustName } from "@/utils/helper"
 
 export default function Nav() {
@@ -30,6 +30,8 @@ export default function Nav() {
         value={tab}
         orientation='vertical'
         variant='scrollable'
+        textColor='secondary'
+        indicatorColor='secondary'
         // sx={{ mt: 0.5, mb: 4 }}
         sx={{ width: '100%' }}
       >
@@ -38,7 +40,27 @@ export default function Nav() {
           href='/'
           value='/'
           label='home'
-          sx={{ alignItems: 'flex-start', '&:hover': { bgcolor: theme.palette.action.hover } }}
+          icon={<CatchingPokemon />}
+          iconPosition='start'
+          sx={{
+            minHeight: '60px',
+            justifyContent: 'flex-start',
+            '&:hover': { bgcolor: theme.palette.action.hover }
+          }}
+        />
+        <Tab
+          component={Link}
+          href='/login'
+          value='/login'
+          label='login'
+          icon={<Login />}
+          iconPosition='start'
+          sx={{
+            display: 'none',
+            minHeight: '60px',
+            justifyContent: 'flex-start',
+            '&:hover': { bgcolor: theme.palette.action.hover }
+          }}
         />
         <Divider />
         <Tab
@@ -49,6 +71,7 @@ export default function Nav() {
           icon={<Person />}
           iconPosition='start'
           sx={{
+            minHeight: '60px',
             justifyContent: 'flex-start',
             '&:hover': { bgcolor: theme.palette.action.hover }
           }}
@@ -62,6 +85,7 @@ export default function Nav() {
           icon={<Settings />}
           iconPosition='start'
           sx={{
+            minHeight: '60px',
             justifyContent: 'flex-start',
             '&:hover': { bgcolor: theme.palette.action.hover }
           }}

@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { Alert, Button, Container, Divider, Link as Anchor, Stack, TextField, Toolbar, Typography, useTheme } from '@mui/material'
+import { useState } from 'react'
+import { Alert, Button, Container, Divider, Link as Anchor, Stack, TextField, Toolbar, Typography, useTheme, InputAdornment, IconButton } from '@mui/material'
 import { ChevronLeft } from '@mui/icons-material'
 // import { useFormStatus } from 'react-dom'
 import { Auth } from '@supabase/auth-ui-react'
@@ -9,6 +10,7 @@ import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '../utils/types'
 import { purple } from '@mui/material/colors'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function AuthForm({
   searchParams, signIn, signUp
@@ -19,6 +21,13 @@ export default function AuthForm({
 }) {
   const supabase = createClientComponentClient<Database>()
   const theme = useTheme()
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+  }
 
   return (
     <>
@@ -35,7 +44,7 @@ export default function AuthForm({
       </Button>
 
       <Container maxWidth='xs'>
-        <Auth
+        {/* <Auth
           supabaseClient={supabase}
           view='sign_in'
           appearance={{
@@ -73,12 +82,11 @@ export default function AuthForm({
             }
           }}
           theme={theme.palette.mode}
-          // showLinks={false}
           providers={[]}
           redirectTo='/auth/callback'
         />
 
-        <Divider sx={{ mb: 3 }} />
+        <Divider sx={{ mb: 3 }} /> */}
 
         <Stack
           direction='column'
@@ -95,7 +103,21 @@ export default function AuthForm({
           />
           <TextField
             label='Password'
-            type='password'
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              )
+            }}
             name='password'
             color='secondary'
             required

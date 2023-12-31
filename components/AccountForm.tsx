@@ -93,7 +93,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
           margin='normal'
         />
         <Button
-          variant='outlined'
+          variant='contained'
           color='secondary'
           fullWidth
           size='large'
