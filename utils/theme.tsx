@@ -1,7 +1,7 @@
 'use client'
 
 import { ThemeProvider, createTheme, useMediaQuery } from '@mui/material'
-import { lime } from '@mui/material/colors'
+import { lime, purple } from '@mui/material/colors'
 import { useMemo } from 'react'
 
 export default function Theme({
@@ -15,7 +15,13 @@ export default function Theme({
       createTheme({
         palette: {
           mode: prefersDarkMode ? 'dark' : 'light',
-          primary: lime
+          // primary: lime,
+          primary: {
+            main: purple[500]
+          },
+          secondary: {
+            main: lime[500]
+          }
         },
       }),
     [prefersDarkMode],

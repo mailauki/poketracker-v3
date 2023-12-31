@@ -1,7 +1,7 @@
 'use client'
 
 import { ArrowBackIosNew, ChevronLeft, Menu as MenuIcon } from "@mui/icons-material"
-import { AppBar, Box, Button, Drawer, IconButton, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, Drawer, IconButton, Link as Anchor, Toolbar, Typography } from "@mui/material"
 import { useState } from "react"
 import { useParams } from "next/navigation"
 import Nav from "./Nav"
@@ -30,6 +30,7 @@ export default function Header() {
     <>
       <AppBar
         position='fixed'
+        color='secondary'
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
         <Toolbar>
@@ -54,17 +55,18 @@ export default function Header() {
               <ArrowBackIosNew />
             </IconButton>
           )}
-          <Typography
+          <Anchor
             variant='h6'
             noWrap
             textTransform='uppercase'
-            component='div'
+            color='inherit'
+            underline='none'
+            href='/'
             sx={{ flexGrow: 1 }}
           >
-            {adjustName(String(params.slug))}
-          </Typography>
+            {params.slug ? adjustName(String(params.slug)) : 'PokéTracker'}
+          </Anchor>
 
-          {/* <Login /> */}
           <Button
             color='inherit'
             aria-label='login'
@@ -73,7 +75,6 @@ export default function Header() {
           >
             Login
           </Button>
-          {/* <AuthButton /> */}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -87,7 +88,6 @@ export default function Header() {
         <Box
           onClick={handleDrawerClose}
           onKeyDown={handleDrawerClose}
-          // sx={{ overflow: 'auto' }}
           sx={{
             flexGrow: 1,
             bgcolor: 'background.paper',

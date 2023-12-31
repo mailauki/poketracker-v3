@@ -4,6 +4,8 @@ import type { Database } from '../utils/types'
 import { useCallback, useEffect, useState } from 'react'
 import SignOut from './SignOutBtn'
 import AuthButton from './AuthButton'
+import { Button, Container, Stack, Toolbar, Typography } from '@mui/material'
+import DexForm from './DexForm'
 
 export default async function Profile() {
   // const cookieStore = cookies()
@@ -91,36 +93,23 @@ export default async function Profile() {
 
   return (
     <>
+      <Toolbar />
       {/* <pre>{JSON.stringify(session?.user, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(profile, null, 2)}</pre> */}
       {profile?.username && (
-        <p>{`${profile.username}'s Profile`}</p>
+      <Typography variant='h4' textAlign='center'>
+        {`${profile.username}'s Profile`}
+      </Typography>
       )}
-      <p>{session?.user.email}</p>
-      {/* <TextField
-      /> */}
-      {/* <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session?.user.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
 
-      <div>
-        <button
-          onClick={() => updateProfile({ username, avatar_url })}
-          disabled={loading}
-        >
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div> */}
+      <Container maxWidth='sm'>
+        <Stack spacing={2}>
+          <Typography>{session?.user.email}</Typography>
+
+          <DexForm />
+        </Stack>
+      </Container>
+
 
       {/* {session ? <SignOut /> : <></>} */}
       {/* <AuthButton /> */}

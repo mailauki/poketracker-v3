@@ -1,12 +1,13 @@
 'use client'
 
-import { Box, Divider, List, ListItemButton, ListItemText, Tab, Tabs, useTheme } from "@mui/material"
+import { Box, Button, Divider, List, ListItemButton, ListItemText, Tab, Tabs, useTheme } from "@mui/material"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { Game } from "../utils/types"
+import { Game } from "@/utils/types"
 import { usePathname } from "next/navigation"
-import { Person, Settings, CatchingPokemon, Login } from "@mui/icons-material"
+import { Person, Settings, CatchingPokemon, Login, Logout } from "@mui/icons-material"
 import { adjustName } from "@/utils/helper"
+import NavTab from "./NavTab"
 
 export default function Nav() {
   const [games, setGames] = useState<Array<Game>>([])
@@ -24,6 +25,26 @@ export default function Nav() {
     setTab(pathname)
   }, [pathname])
 
+  const tabs = [
+    {
+      href: '/',
+      label: 'home',
+      icon: <CatchingPokemon />
+    }, {
+      href: '/login',
+      label: 'login',
+      icon: <Login />
+    }, {
+      href: '/profile',
+      label: 'profile',
+      icon: <Person />
+    }, {
+      href: '/account',
+      label: 'account settings',
+      icon: <Settings />
+    }
+  ]
+
   return (
     <>
       <Tabs
@@ -35,61 +56,21 @@ export default function Nav() {
         // sx={{ mt: 0.5, mb: 4 }}
         sx={{ width: '100%' }}
       >
-        <Tab
-          component={Link}
-          href='/'
-          value='/'
-          label='home'
-          icon={<CatchingPokemon />}
-          iconPosition='start'
-          sx={{
-            minHeight: '60px',
-            justifyContent: 'flex-start',
-            '&:hover': { bgcolor: theme.palette.action.hover }
-          }}
-        />
-        <Tab
-          component={Link}
-          href='/login'
-          value='/login'
-          label='login'
-          icon={<Login />}
-          iconPosition='start'
-          sx={{
-            display: 'none',
-            minHeight: '60px',
-            justifyContent: 'flex-start',
-            '&:hover': { bgcolor: theme.palette.action.hover }
-          }}
-        />
-        <Divider />
-        <Tab
-          component={Link}
-          href='/profile'
-          value='/profile'
-          label='profile'
-          icon={<Person />}
-          iconPosition='start'
-          sx={{
-            minHeight: '60px',
-            justifyContent: 'flex-start',
-            '&:hover': { bgcolor: theme.palette.action.hover }
-          }}
-          disabled
-        />
-        <Tab
-          component={Link}
-          href='/account'
-          value='/account'
-          label='account'
-          icon={<Settings />}
-          iconPosition='start'
-          sx={{
-            minHeight: '60px',
-            justifyContent: 'flex-start',
-            '&:hover': { bgcolor: theme.palette.action.hover }
-          }}
-        />
+        {tabs.map((tab) => (
+          <NavTab
+            key={tab.href}
+            href={tab.href}
+            label={tab.label}
+            icon={tab.icon}
+          />
+        ))}
+        <form action='/auth/signout'>
+          <NavTab
+            href='/signout'
+            label='signout'
+            icon={<Logout />}
+          />
+        </form>
         <Divider />
         {games.map((game) => 
           <Tab

@@ -8,9 +8,10 @@ import { ChevronLeft } from '@mui/icons-material'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Database } from '../utils/types'
+import { Database } from '@/utils/types'
 import { purple } from '@mui/material/colors'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { useParams, usePathname, useSearchParams } from 'next/navigation'
 
 export default function AuthForm({
   searchParams, signIn, signUp
@@ -22,11 +23,17 @@ export default function AuthForm({
   const supabase = createClientComponentClient<Database>()
   const theme = useTheme()
   const [showPassword, setShowPassword] = useState(false)
+  const [haveAccount, setHaveAccount] = useState(true)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
+  }
+
+  const handleFormToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    setHaveAccount(!haveAccount)
   }
 
   return (
@@ -44,7 +51,7 @@ export default function AuthForm({
       </Button>
 
       <Container maxWidth='xs'>
-        {/* <Auth
+        <Auth
           supabaseClient={supabase}
           view='sign_in'
           appearance={{
@@ -86,13 +93,13 @@ export default function AuthForm({
           redirectTo='/auth/callback'
         />
 
-        <Divider sx={{ mb: 3 }} /> */}
+        <Divider sx={{ mb: 3 }} />
 
         <Stack
           direction='column'
           spacing={2}
           component='form'
-          action={signIn}
+          action={haveAccount ? signIn : signUp}
         >
           <TextField
             label='Email'
@@ -122,28 +129,35 @@ export default function AuthForm({
             color='secondary'
             required
           />
-          <Button
-            variant='contained'
-            color='secondary'
-            type='submit'
-          >
-            Sign In
-          </Button>
-          <Button
-            variant='outlined'
-            color='secondary'
-            type='submit'
-            formAction={signUp}
-          >
-            Sign Up
-          </Button>
-          {/* <Anchor
+          {haveAccount ? (
+            <Button
+              variant='contained'
+              color='secondary'
+              type='submit'
+              role='button'
+            >
+              Sign In
+            </Button>
+          ) : (
+            <Button
+              // variant='outlined'
+              variant='contained'
+              color='secondary'
+              type='submit'
+              // formAction={signUp}
+            >
+              Sign Up
+            </Button>
+          )}
+          <Anchor
             textAlign='center'
             color='text.secondary'
             variant='caption'
+            component='button'
+            onClick={handleFormToggle}
           >
-            {"Don't have an account? Sign Up"}
-          </Anchor> */}
+            {haveAccount ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
+          </Anchor>
           {searchParams?.message && (
             <Alert severity='warning'>
               {searchParams.message}

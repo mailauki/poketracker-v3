@@ -3,7 +3,7 @@
 import { Divider, Stack, Tab, Tabs } from "@mui/material"
 import { useEffect, useState } from "react"
 import PokeCard from "./PokeCard"
-import { Pokedex, Pokemon } from "../utils/types"
+import { Pokedex, Pokemon } from "@/utils/types"
 
 export default function Pokedexes({ slug }: { slug: string }) {
   const [pokedexes, setPokedexes] = useState<Array<Pokedex>>([])

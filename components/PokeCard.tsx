@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardMedia, IconButton } from "@mui/material"
-import { padZero } from "../utils/helper"
+import { padZero } from "@/utils/helper"
 import { useEffect, useState } from "react"
-import { PokeProps, Sprites } from "../utils/types"
+import { PokeProps, Sprites } from "@/utils/types"
 import Image from "next/image"
 
 export default function PokeCard({ pokemon }: PokeProps) {

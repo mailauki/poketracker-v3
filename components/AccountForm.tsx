@@ -1,9 +1,9 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
-import { Database } from '../utils/types'
+import { Database } from '@/utils/types'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Button, Container, TextField, Toolbar } from '@mui/material'
+import { Button, Container, TextField, Toolbar, Typography } from '@mui/material'
 import SignOut from './SignOutBtn'
 
 export default function AccountForm({ session }: { session: Session | null }) {
@@ -72,6 +72,10 @@ export default function AccountForm({ session }: { session: Session | null }) {
       <Toolbar />
 
       <Container maxWidth='xs'>
+          <Typography variant='h4' textAlign='center'>
+            {`${`${username}'s` || 'Your'} Account`}
+          </Typography>
+
         <TextField
           id='email'
           label='Email'
