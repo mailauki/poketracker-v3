@@ -15,7 +15,6 @@ export default function Theme({
       createTheme({
         palette: {
           mode: prefersDarkMode ? 'dark' : 'light',
-          // primary: lime,
           primary: {
             main: purple[500]
           },

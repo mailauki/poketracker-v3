@@ -5,6 +5,9 @@ import { Toolbar } from "@mui/material"
 export const metadata: Metadata = {
   title: 'Game',
   // title: `Game ${params.slug}`,
+  icons: {
+    icon: '/pokeball-dark.png'
+  }
 }
 
 export default function GamePage({ params }: { params: { slug: string } }) {

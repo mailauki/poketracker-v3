@@ -2,7 +2,7 @@ import { Button, Divider, Tab, useTheme } from "@mui/material"
 import Link from "next/link"
 import { ReactElement } from "react"
 
-export default function NavTab({ href, label, icon }: { href: string, label: string, icon: ReactElement }) {
+export default function NavTab({ href, value, label, icon }: { href: string, value: string, label: string, icon: ReactElement }) {
   const theme = useTheme()
 
   return (
@@ -11,6 +11,7 @@ export default function NavTab({ href, label, icon }: { href: string, label: str
         component={href == '/signout' ? Button : Link}
         href={href == '/signout' ? '' : href}
         type={href == '/signout' ? 'submit' : ''}
+        color='primary'
         value={href}
         label={label}
         icon={icon}

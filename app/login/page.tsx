@@ -7,6 +7,9 @@ import AuthForm from '@/components/AuthForm'
 
 export const metadata: Metadata = {
   title: 'Login',
+  icons: {
+    icon: '/pokeball-dark.png'
+  }
 }
 
 export default function Login({

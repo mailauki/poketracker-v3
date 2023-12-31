@@ -10,7 +10,6 @@ export default function Login() {
     <Button
       // color='inherit'
       variant='outlined'
-      color='secondary'
       aria-label='login'
       component={Link}
       href='/login'

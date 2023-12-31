@@ -9,7 +9,6 @@ export default function SignOut() {
       <Button
         type='submit'
         variant='outlined'
-        color='secondary'
         fullWidth
         size='large'
         aria-label='sign out'

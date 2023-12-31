@@ -38,8 +38,6 @@ export default function Pokedexes({ slug }: { slug: string }) {
     <>
       <Tabs
         value={pokedex}
-        textColor='secondary'
-        indicatorColor='secondary'
       >
         {pokedexes.map((pokedex) => 
           <Tab

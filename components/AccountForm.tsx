@@ -81,7 +81,6 @@ export default function AccountForm({ session }: { session: Session | null }) {
           label='Email'
           value={session?.user.email}
           type='text'
-          color='secondary'
           fullWidth
           margin='normal'
           disabled
@@ -92,13 +91,11 @@ export default function AccountForm({ session }: { session: Session | null }) {
           value={username || ''}
           onChange={(e) => setUsername(e.target.value)}
           type='text'
-          color='secondary'
           fullWidth
           margin='normal'
         />
         <Button
           variant='contained'
-          color='secondary'
           fullWidth
           size='large'
           sx={{ mt: 1, mb: 2 }}

@@ -8,7 +8,6 @@ export const metadata: Metadata = {
     template: '%s | PokéTracker',
     default: 'PokéTracker',
   },
-  description: '...',
   icons: {
     // icon: '/pokeball.svg'
     icon: '/pokeball-dark.png'

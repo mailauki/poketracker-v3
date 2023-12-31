@@ -11,7 +11,6 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '@/utils/types'
 import { purple } from '@mui/material/colors'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { useParams, usePathname, useSearchParams } from 'next/navigation'
 
 export default function AuthForm({
   searchParams, signIn, signUp
@@ -44,7 +43,6 @@ export default function AuthForm({
         startIcon={<ChevronLeft />}
         component={Link}
         href='/'
-        color='secondary'
         sx={{ ml: 2, mt: 2 }}
       >
         Back
@@ -59,9 +57,9 @@ export default function AuthForm({
             variables: {
               default: {
                 colors: {
-                  brand: theme.palette.secondary.main,
+                  brand: theme.palette.primary.main,
                   brandAccent: purple[400],
-                  brandButtonText: theme.palette.secondary.contrastText
+                  brandButtonText: theme.palette.primary.contrastText
                 }
               }
             }
@@ -105,7 +103,6 @@ export default function AuthForm({
             label='Email'
             type='text'
             name='email'
-            color='secondary'
             required
           />
           <TextField
@@ -126,13 +123,11 @@ export default function AuthForm({
               )
             }}
             name='password'
-            color='secondary'
             required
           />
           {haveAccount ? (
             <Button
               variant='contained'
-              color='secondary'
               type='submit'
               role='button'
             >
@@ -140,11 +135,8 @@ export default function AuthForm({
             </Button>
           ) : (
             <Button
-              // variant='outlined'
               variant='contained'
-              color='secondary'
               type='submit'
-              // formAction={signUp}
             >
               Sign Up
             </Button>
