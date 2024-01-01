@@ -36,35 +36,29 @@ export default function Pokedexes({ slug }: { slug: string }) {
   if(!pokemonEntries) return <Loading />
 
   return (
-    <>
-      <Container maxWidth='md'>
-        <Tabs
-          value={pokedex}
-          // variant='fullWidth'
-          // sx={{ width: '100%' }}
-        >
-          {pokedexes.map((pokedex) => 
-            <Tab
-              key={pokedex.name}
-              onClick={() => {
-                setPokedex(pokedex.name)
-              }}
-              value={pokedex.name}
-              label={pokedex.name}
-            />
-          )}
-        </Tabs>
-        <Divider sx={{ mb: 2 }} />
-        
-        <Stack direction='row' flexWrap='wrap' useFlexGap gap={3} justifyContent='center'>
-          {pokemonEntries.map((pokemon) => 
-            <PokeCard
-              key={pokemon.entry_number}
-              pokemon={pokemon}
-            />
-          )}
-        </Stack>
-      </Container>
-    </>
+    <Container maxWidth='md'>
+      <Tabs value={pokedex}>
+        {pokedexes.map((pokedex) => 
+          <Tab
+            key={pokedex.name}
+            onClick={() => {
+              setPokedex(pokedex.name)
+            }}
+            value={pokedex.name}
+            label={pokedex.name}
+          />
+        )}
+      </Tabs>
+      <Divider sx={{ mb: 2 }} />
+
+      <Stack direction='row' flexWrap='wrap' useFlexGap gap={3} justifyContent='center'>
+        {pokemonEntries.map((pokemon) => 
+          <PokeCard
+            key={pokemon.entry_number}
+            pokemon={pokemon}
+          />
+        )}
+      </Stack>
+    </Container>
   )
 }

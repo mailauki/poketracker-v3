@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Database } from '@/utils/types'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Button, Container, TextField, Toolbar, Typography } from '@mui/material'
+import { Button, Container, TextField, Typography } from '@mui/material'
 import SignOut from './SignOutBtn'
 
 export default function AccountForm({ session }: { session: Session | null }) {
@@ -68,44 +68,42 @@ export default function AccountForm({ session }: { session: Session | null }) {
   }
 
   return (
-    <>
-      <Container maxWidth='xs'>
-          <Typography variant='h4' textAlign='center'>
-            {`${username ? `${username}'s` : 'Your'} Account`}
-          </Typography>
+    <Container maxWidth='xs'>
+        <Typography variant='h4' textAlign='center'>
+          {`${username ? `${username}'s` : 'Your'} Account`}
+        </Typography>
 
-        <TextField
-          id='email'
-          label='Email'
-          value={session?.user.email}
-          type='text'
-          fullWidth
-          margin='normal'
-          disabled
-        />
-        <TextField
-          id='usename'
-          label='Username'
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
-          type='text'
-          fullWidth
-          margin='normal'
-        />
-        <Button
-          variant='contained'
-          fullWidth
-          size='large'
-          sx={{ mt: 1, mb: 2 }}
-          onClick={() => updateProfile({ username, avatar_url })}
-          disabled={loading}
-        >
-          {loading ? 'Loading ...' : 'Update'}
-        </Button>
-        <form action='/auth/signout'>
-          <SignOut />
-        </form>
-      </Container>
-    </>
+      <TextField
+        id='email'
+        label='Email'
+        value={session?.user.email}
+        type='text'
+        fullWidth
+        margin='normal'
+        disabled
+      />
+      <TextField
+        id='usename'
+        label='Username'
+        value={username || ''}
+        onChange={(e) => setUsername(e.target.value)}
+        type='text'
+        fullWidth
+        margin='normal'
+      />
+      <Button
+        variant='contained'
+        fullWidth
+        size='large'
+        sx={{ mt: 1, mb: 2 }}
+        onClick={() => updateProfile({ username, avatar_url })}
+        disabled={loading}
+      >
+        {loading ? 'Loading ...' : 'Update'}
+      </Button>
+      <form action='/auth/signout'>
+        <SignOut />
+      </form>
+    </Container>
   )
 }

@@ -1,3 +1,5 @@
+import { ReactElement } from "react";
+
 export interface Pokemon {
   entry_number: number,
   pokemon_species: {
@@ -29,6 +31,14 @@ export interface Game {
 export interface Pokedex {
   name: string,
   url: string
+}
+
+export interface LinkButtonProps {
+  label?: string;
+  href: string;
+  selected?: boolean;
+  value?: string,
+  icon?: ReactElement
 }
 
 export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]

@@ -5,17 +5,15 @@ import LogoutIcon from '@mui/icons-material/Logout'
 
 export default function SignOut() {
   return (
-    // <form action='/auth/signout' method='post'>
-      <Button
-        type='submit'
-        variant='outlined'
-        fullWidth
-        size='large'
-        aria-label='sign out'
-        startIcon={<LogoutIcon />}
-      >
-        Sign Out
-      </Button>
-    // </form>
+    <Button
+      type='submit'
+      variant='outlined'
+      fullWidth
+      size='large'
+      aria-label='sign out'
+      startIcon={<LogoutIcon />}
+    >
+      Sign Out
+    </Button>
   )
 }

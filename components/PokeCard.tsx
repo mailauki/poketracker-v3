@@ -33,12 +33,6 @@ export default function PokeCard({ pokemon }: PokeProps) {
           zIndex: 2
         }}
       >
-        {/* <Image
-          src="/pokeball.svg"
-          width={32}
-          height={32}
-          alt="pokeball"
-        /> */}
         <MoreVert />
       </IconButton>
 
@@ -73,17 +67,6 @@ export default function PokeCard({ pokemon }: PokeProps) {
           ) : (
             <Loading />
           )}
-          {/* {sprites && (
-            <Image
-            src={sprites!.front_default}
-            alt={pokemon.pokemon_species.name}
-            width={100}
-            height={100}
-            // loader={<Loading />}
-            loading='lazy'
-            placeholder='empty'
-            />
-          )} */}
         </Box>
       </Box>
 
@@ -104,28 +87,6 @@ export default function PokeCard({ pokemon }: PokeProps) {
           {padZero(pokemon?.entry_number)}
         </Typography>
       </Stack>
-
-      {/* <CardHeader
-        // disableTypography
-        action={
-          <IconButton
-            aria-label="captured"
-            sx={{
-              filter: (theme) => theme.palette.mode == 'dark' ? 'invert(1)': ''
-            }}
-          >
-            <Image
-              src="/pokeball.svg"
-              width={32}
-              height={32}
-              alt="pokeball"
-            />
-          </IconButton>
-        }
-        title={<Typography variant='overline'>{pokemon?.pokemon_species.name}</Typography>}
-        subheader={<Typography color='text.secondary' variant='caption'>{padZero(pokemon?.entry_number)}</Typography>}
-        // sx={{ zIndex: (theme) => theme.zIndex.mobileStepper }}
-      /> */}
     </Card>
   )
 }

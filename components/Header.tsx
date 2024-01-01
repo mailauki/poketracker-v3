@@ -1,15 +1,11 @@
 'use client'
 
-import { ArrowBackIosNew, ChevronLeft, Menu as MenuIcon } from "@mui/icons-material"
-import { AppBar, Box, Button, Drawer, IconButton, Link as Anchor, Toolbar, Typography } from "@mui/material"
+import { ArrowBackIosNew, Menu as MenuIcon } from "@mui/icons-material"
+import { AppBar, Box, Button, Drawer, IconButton, Link as Anchor, Toolbar } from "@mui/material"
 import { useState } from "react"
 import { useParams } from "next/navigation"
 import Nav from "./Nav"
 import Link from "next/link"
-import SignOut from "./SignOutBtn"
-import { Session } from '@supabase/auth-helpers-nextjs'
-import AuthButton from "./AuthButton"
-import Login from "./LoginBtn"
 import { adjustName } from "@/utils/helper"
 
 const drawerWidth = 350

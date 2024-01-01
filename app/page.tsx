@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material"
 import { Metadata } from 'next'
 import AuthButton from "@/components/AuthButton"
 import Image from "next/image"
