@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Header from '../components/Header'
 import './globals.css'
+import styles from "./page.module.css"
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
 import Theme from '@/utils/theme'
 
@@ -22,8 +23,11 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <AppRouterCacheProvider>
-            <Header />
-            {children}
+            <main className={styles.main}>
+              <Header />
+              {children}
+              <footer></footer>
+            </main>
           </AppRouterCacheProvider>
         </body>
       </html>

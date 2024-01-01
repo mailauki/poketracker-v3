@@ -57,9 +57,8 @@ export default function Nav() {
     return (
       <ListItemButton
         selected={value == props.href}
-        component={props.href == '/signout' ? ListItemButton : Link}
+        component={Link}
         href={props.href}
-        type={props.href == '/signout' ? 'submit' : ''}
         sx={{
           textTransform: 'uppercase',
           borderRight: '4px solid',
@@ -160,12 +159,21 @@ export default function Nav() {
             icon={<Settings />}
           />
           <form action='/auth/signout'>
-            <LinkButton
-              href='/signout'
-              label='signout'
-              value='/signout'
-              icon={<Logout />}
-            />
+            <ListItemButton
+              type='submit'
+              component={Button}
+              sx={{
+                width: '100%',
+                textTransform: 'uppercase',
+                borderRight: '4px solid',
+                borderColor: 'transparent'
+              }}
+            >
+              <ListItemIcon>
+                {<Logout />}
+              </ListItemIcon>
+              <ListItemText primary='sign out' />
+            </ListItemButton>
           </form>
 
           <Divider />

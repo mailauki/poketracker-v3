@@ -10,14 +10,14 @@ import DexForm from './DexForm'
 export default async function Profile() {
   // const cookieStore = cookies()
   // const supabase = createClient(cookieStore)
-  const supabase = createServerComponentClient<Database>({ cookies })
-  const { data: { session } } = await supabase.auth.getSession()
+  // const supabase = createServerComponentClient<Database>({ cookies })
+  // const { data: { session } } = await supabase.auth.getSession()
   // const { data: profiles } = await supabase.from('profiles').select()
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select(`username, avatar_url`)
-    .eq('id', session?.user?.id)
-    .single()
+  // const { data: profile } = await supabase
+  //   .from('profiles')
+  //   .select(`username, avatar_url`)
+  //   .eq('id', session?.user?.id)
+  //   .single()
   // const { data: { user } } = await supabase.auth.getUser()
   // const { session, user } = data
   // const [profiles, setProfiles] = useState<any[] | null>(null)
@@ -93,18 +93,17 @@ export default async function Profile() {
 
   return (
     <>
-      <Toolbar />
       {/* <pre>{JSON.stringify(session?.user, null, 2)}</pre> */}
       {/* <pre>{JSON.stringify(profile, null, 2)}</pre> */}
-      {profile?.username && (
-      <Typography variant='h4' textAlign='center'>
-        {`${profile.username}'s Profile`}
-      </Typography>
-      )}
+      {/* {profile?.username && (
+        <Typography variant='h4' textAlign='center'>
+          {`${profile.username}'s Profile`}
+        </Typography>
+      )} */}
 
       <Container maxWidth='sm'>
         <Stack spacing={2}>
-          <Typography>{session?.user.email}</Typography>
+          {/* <Typography>{session?.user.email}</Typography> */}
 
           <DexForm />
         </Stack>

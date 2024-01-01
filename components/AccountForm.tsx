@@ -69,11 +69,9 @@ export default function AccountForm({ session }: { session: Session | null }) {
 
   return (
     <>
-      <Toolbar />
-
       <Container maxWidth='xs'>
           <Typography variant='h4' textAlign='center'>
-            {`${`${username}'s` || 'Your'} Account`}
+            {`${username ? `${username}'s` : 'Your'} Account`}
           </Typography>
 
         <TextField

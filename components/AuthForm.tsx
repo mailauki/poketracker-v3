@@ -5,11 +5,11 @@ import { useState } from 'react'
 import { Alert, Button, Container, Divider, Link as Anchor, Stack, TextField, Toolbar, Typography, useTheme, InputAdornment, IconButton } from '@mui/material'
 import { ChevronLeft } from '@mui/icons-material'
 // import { useFormStatus } from 'react-dom'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Database } from '@/utils/types'
-import { purple } from '@mui/material/colors'
+// import { Auth } from '@supabase/auth-ui-react'
+// import { ThemeSupa } from '@supabase/auth-ui-shared'
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+// import { Database } from '@/utils/types'
+// import { purple } from '@mui/material/colors'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function AuthForm({
@@ -19,8 +19,8 @@ export default function AuthForm({
   signIn: (formData: FormData) => void,
   signUp: (formData: FormData) => void
 }) {
-  const supabase = createClientComponentClient<Database>()
-  const theme = useTheme()
+  // const supabase = createClientComponentClient<Database>()
+  // const theme = useTheme()
   const [showPassword, setShowPassword] = useState(false)
   const [haveAccount, setHaveAccount] = useState(true)
 
@@ -37,19 +37,17 @@ export default function AuthForm({
 
   return (
     <>
-      <Toolbar />
-
-      <Button
+      {/* <Button
         startIcon={<ChevronLeft />}
         component={Link}
         href='/'
-        sx={{ ml: 2, mt: 2 }}
+        sx={{ ml: 2 }}
       >
         Back
-      </Button>
+      </Button> */}
 
       <Container maxWidth='xs'>
-        <Auth
+        {/* <Auth
           supabaseClient={supabase}
           view='sign_in'
           appearance={{
@@ -91,7 +89,7 @@ export default function AuthForm({
           redirectTo='/auth/callback'
         />
 
-        <Divider sx={{ mb: 3 }} />
+        <Divider sx={{ mb: 3 }} /> */}
 
         <Stack
           direction='column'

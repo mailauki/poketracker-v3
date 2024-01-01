@@ -77,11 +77,14 @@ export default function Header() {
           </Button>
         </Toolbar>
       </AppBar>
+
       <Drawer
         open={open}
         onClose={handleDrawerClose}
         sx={{
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          '& .MuiDrawer-paper': {
+            boxSizing: 'border-box', width: drawerWidth
+          },
         }}
       >
         <Toolbar />
@@ -99,6 +102,8 @@ export default function Header() {
           <Nav />
         </Box>
       </Drawer>
+
+      <Toolbar sx={{ mb: 2 }} />
     </>
   );
 }

@@ -28,4 +28,8 @@ a {
   html {
     color-scheme: dark;
   }
+
+  .svg-pokeball {
+    filter: invert(1);
+  }
 }

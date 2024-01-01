@@ -12,15 +12,15 @@ export default async function AuthButton() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const signOut = async () => {
-    'use server'
+  // const signOut = async () => {
+  //   'use server'
 
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-    await supabase.auth.signOut()
-    // return redirect('/login')
-    return redirect('/')
-  }
+  //   const cookieStore = cookies()
+  //   const supabase = createClient(cookieStore)
+  //   await supabase.auth.signOut()
+  //   // return redirect('/login')
+  //   return redirect('/')
+  // }
 
   return user ? (
     <div
@@ -31,7 +31,7 @@ export default async function AuthButton() {
       }}
     >
       Hey, {user.email}!
-      <form action={signOut}>
+      <form action='/auth/signout'>
         <SignOut />
       </form>
     </div>
