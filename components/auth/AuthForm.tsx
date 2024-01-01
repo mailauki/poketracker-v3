@@ -13,11 +13,11 @@ import { ChevronLeft } from '@mui/icons-material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function AuthForm({
-  searchParams, signIn, signUp
+  searchParams
 }: {
   searchParams: { message: string },
-  signIn: (formData: FormData) => void,
-  signUp: (formData: FormData) => void
+  // signIn: (formData: FormData) => void,
+  // signUp: (formData: FormData) => void
 }) {
   // const supabase = createClientComponentClient<Database>()
   // const theme = useTheme()
@@ -46,7 +46,7 @@ export default function AuthForm({
         Back
       </Button> */}
 
-      <Container maxWidth='xs'>
+      <Container maxWidth='xs' sx={{ pt: 2 }}>
         {/* <Auth
           supabaseClient={supabase}
           view='sign_in'
@@ -95,7 +95,8 @@ export default function AuthForm({
           direction='column'
           spacing={2}
           component='form'
-          action={haveAccount ? signIn : signUp}
+          action={haveAccount ? "/auth/login" : "/auth/signup"}
+          method="post"
         >
           <TextField
             label='Email'

@@ -1,6 +1,8 @@
 import { Metadata } from 'next'
-import AuthButton from "@/components/AuthButton"
+import AuthButton from "@/components/auth/AuthButton"
 import Image from "next/image"
+import { Stack, Toolbar } from '@mui/material'
+import Main from '@/components/Main'
 
 export const metadata: Metadata = {
   title: {
@@ -15,8 +17,9 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <>
+    <Main>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', alignItems: 'center' }}>
+      {/* <Stack direction="column" spacing={4} alignItems="center" sx={{ pt: 2 }}> */}
         <h1>PokéTracker</h1>
         {/* <Typography variant="h1">PokéTracker</Typography> */}
 
@@ -29,7 +32,8 @@ export default function Home() {
         />
 
         <AuthButton />
+      {/* </Stack> */}
       </div>
-    </>
+    </Main>
   )
 }

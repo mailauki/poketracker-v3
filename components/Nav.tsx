@@ -14,7 +14,6 @@ export default function Nav() {
   const theme = useTheme()
   const [value, setValue] = useState<string>(pathname)
 
-
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/version-group?limit=27")
     .then((res) => res.json())
@@ -76,12 +75,18 @@ export default function Nav() {
           icon={<Person />}
         />
         <LinkButton
+          label='profile'
+          href='/user'
+          value='/user'
+          icon={<Person />}
+        />
+        <LinkButton
           label='account settings'
           href='/account'
           value='/account'
           icon={<Settings />}
         />
-        <form action='/auth/signout'>
+        <form action="/auth/signout" method="post">
           <ListItemButton
             type='submit'
             component={Button}

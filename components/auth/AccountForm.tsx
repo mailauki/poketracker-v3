@@ -5,9 +5,15 @@ import { Database } from '@/utils/types'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Button, Container, TextField, Typography } from '@mui/material'
 import SignOut from './SignOutBtn'
+// import { createClient } from '@/utils/supabase/server'
+// import { cookies } from 'next/headers'
+import { createClient } from '@/utils/supabase/client'
 
 export default function AccountForm({ session }: { session: Session | null }) {
-  const supabase = createClientComponentClient<Database>()
+  // const supabase = createClientComponentClient<Database>()
+  // const cookieStore = cookies()
+  // const supabase = createClient(cookieStore)
+  const supabase = createClient()
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState<string | null>(null)
@@ -68,7 +74,7 @@ export default function AccountForm({ session }: { session: Session | null }) {
   }
 
   return (
-    <Container maxWidth='xs'>
+    <Container maxWidth='xs' sx={{ pt: 2 }}>
         <Typography variant='h4' textAlign='center'>
           {`${username ? `${username}'s` : 'Your'} Account`}
         </Typography>

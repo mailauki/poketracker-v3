@@ -3,7 +3,9 @@ import { Metadata } from 'next'
 import { headers, cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
-import AuthForm from '@/components/AuthForm'
+import AuthForm from '@/components/auth/AuthForm'
+import { Toolbar } from '@mui/material'
+import Main from '@/components/Main'
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -34,7 +36,7 @@ export default function Login({
       return redirect('/login?message=Could not authenticate user')
     }
 
-    return redirect('/')
+    return redirect('/user')
   }
 
   const signUp = async (formData: FormData) => {
@@ -157,11 +159,14 @@ export default function Login({
           )}
         </Stack>
       </Container> */}
-      <AuthForm
-        searchParams={searchParams}
-        signIn={signIn}
-        signUp={signUp}
-      />
+      {/* <Toolbar sx={{ mb: 2 }} /> */}
+      <Main>
+        <AuthForm
+          searchParams={searchParams}
+          // signIn={signIn}
+          // signUp={signUp}
+        />
+      </Main>
     </>
   )
 }

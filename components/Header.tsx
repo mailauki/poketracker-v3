@@ -7,10 +7,11 @@ import { useParams } from "next/navigation"
 import Nav from "./Nav"
 import Link from "next/link"
 import { adjustName } from "@/utils/helper"
+import { Session } from "@supabase/supabase-js"
 
 const drawerWidth = 350
 
-export default function Header() {
+export default function Header({ session }: { session: Session | null }) {
   const params = useParams()
   const [open, setOpen] = useState(false)
   
@@ -99,7 +100,7 @@ export default function Header() {
         </Box>
       </Drawer>
 
-      <Toolbar sx={{ mb: 2 }} />
+      {/* <Toolbar sx={{ mb: 2 }} /> */}
     </>
   );
 }

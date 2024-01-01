@@ -31,7 +31,7 @@ export default async function AuthButton() {
       }}
     >
       Hey, {user.email}!
-      <form action='/auth/signout'>
+      <form action='/auth/signout' method='post'>
         <SignOut />
       </form>
     </div>
