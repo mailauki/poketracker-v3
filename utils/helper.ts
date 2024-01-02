@@ -25,3 +25,7 @@ export function adjustName(name: string) {
     return title.split('2').join('2 &').slice(0,-2)
   } else return title
 }
+
+export function hyphenate(title: string) {
+  return title?.toLowerCase().split(" ").join("-") || ''
+}

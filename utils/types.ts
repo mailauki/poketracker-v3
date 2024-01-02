@@ -46,7 +46,7 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
-      movies: {
+      pokedexes: {
         Row: {
           // the data expected from .select()
           id: number

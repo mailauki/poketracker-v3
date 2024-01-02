@@ -4,10 +4,18 @@ import { useEffect, useState } from "react"
 import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from "@mui/material"
 import { Close } from "@mui/icons-material"
 import { Game } from "@/utils/types"
-import { adjustName } from "@/utils/helper"
+import { adjustName, hyphenate } from "@/utils/helper"
+import { createClient } from "@/utils/supabase/client"
 
 export default function DexForm() {
   const [games, setGames] = useState<Array<Game>>([])
+  const supabase = createClient()
+  const [loading, setLoading] = useState(true)
+  const [username, setUsername] = useState<string | null>(null)
+  const [title, setTitle] = useState<string | null>(null)
+  const [game, setGame] = useState<string | null>('home')
+  const [type, setType] = useState<string | null>(null)
+  const [shiny, setShiny] = useState<boolean>(false)
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/version-group?limit=27")
@@ -23,6 +31,53 @@ export default function DexForm() {
 
   const handleClose = () => {
     setOpen(false)
+  }
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault()
+  //   handleClose()
+  // }
+
+  async function addDex({
+    title,
+    game,
+    type,
+    shiny
+  }: {
+    title: string | null
+    game: string | null
+    type: string | null
+    shiny: boolean
+  }) {
+    try {
+      setLoading(true)
+
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
+      
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('username')
+        .eq('id', user?.id)
+        .single()
+
+      const { error } = await supabase.from('pokedexes').insert({
+        title,
+        game,
+        type,
+        shiny,
+        user: profile?.username,
+        user_id: user?.id
+      })
+      if (error) throw error
+      alert('Dex added!')
+    } catch (error) {
+      alert('Error updating the data!')
+    } finally {
+      setLoading(false)
+      handleClose()
+    }
   }
 
   return (
@@ -56,11 +111,21 @@ export default function DexForm() {
         </IconButton>
 
         <DialogContent dividers>
-          <Stack direction='column' spacing={2}>
+          <Stack
+            direction='column'
+            spacing={2}
+            component='form'
+            // action='/api/dexes'
+            // method="post"
+          >
             <TextField
               label='Title'
+              name='title'
               required
-              helperText={`/username/hyphenated-title`}
+              helperText={`/username/${hyphenate(title! || "Living Dex")}`}
+              placeholder="Living Dex"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
             />
 
             <FormControl fullWidth>
@@ -69,7 +134,10 @@ export default function DexForm() {
                 labelId="game-select-label"
                 id="game-select"
                 label='Game'
-                defaultValue='home'
+                name='game'
+                // defaultValue='home'
+                value={game}
+                onChange={(event) => setGame(event.target.value)}
                 sx={{ textTransform: 'uppercase' }}
               >
                 <MenuItem
@@ -81,7 +149,7 @@ export default function DexForm() {
                 {games.map((game) => (
                   <MenuItem
                     key={game.name}
-                    value={`/game/${game.name}`}
+                    value={`${game.name}`}
                     sx={{ textTransform: 'uppercase' }}
                   >
                     {`${adjustName(game.name)}`}
@@ -95,29 +163,40 @@ export default function DexForm() {
               <RadioGroup
                 row
                 aria-labelledby="dex-type-label"
-                name="dex-type"
+                name="type"
+                value={type}
+                onChange={(event) => setType(event.target.value)}
               >
-                <FormControlLabel value="national" control={<Radio />} label="Full National" />
+                <FormControlLabel value="National" control={<Radio />} label="National" />
               </RadioGroup>
             </FormControl>
 
-            <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
+            <FormControl sx={{ m: 3 }} component="fieldset" variant="standard" name='shiny'>
               <FormLabel component="legend">Customizations</FormLabel>
               <FormGroup>
                 <FormControlLabel
                   control={
-                    <Checkbox name="shiny" />
+                    <Checkbox
+                      name="shiny"
+                      checked={shiny}
+                      onChange={(event) => setShiny(event.target.checked)}
+                    />
                   }
                   label="Shiny"
                 />
-                <FormControlLabel
-                  control={
-                    <Checkbox name="gigantamax" />
-                  }
-                  label="Gigantamax Forms"
-                />
               </FormGroup>
             </FormControl>
+
+            {/* <Button
+              variant='contained'
+              type="submit"
+              fullWidth
+              autoFocus
+              // onClick={handleClose}
+              sx={{ mt: 1, ml: 2, mb: 1, mr: 2 }}
+            >
+              Create
+            </Button> */}
           </Stack>
         </DialogContent>
 
@@ -126,7 +205,7 @@ export default function DexForm() {
             variant='contained'
             fullWidth
             autoFocus
-            onClick={handleClose}
+            onClick={() => addDex({ title, game, type, shiny })}
             sx={{ mt: 1, ml: 2, mb: 1, mr: 2 }}
           >
             Create

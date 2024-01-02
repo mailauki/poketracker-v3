@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
   })
@@ -20,21 +20,21 @@ export async function POST(request: Request) {
     return redirect('/login?message=Could not authenticate user')
   }
 
-  console.log(data.session.user)
+  // console.log(data.session.user)
 
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
-  console.log({user})
+  // console.log({user})
   
   const { data: profile } = await supabase
     .from('profiles')
-    .select(`username, avatar_url`)
+    .select('username')
     .eq('id', user?.id)
     .single()
 
-  console.log({profile})
+  // console.log({profile})
 
   return redirect(`/user/${profile?.username}`)
 

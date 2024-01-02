@@ -128,7 +128,6 @@ export default function AuthForm({
             <Button
               variant='contained'
               type='submit'
-              role='button'
             >
               Sign In
             </Button>
