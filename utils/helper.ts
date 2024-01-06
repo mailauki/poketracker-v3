@@ -9,18 +9,24 @@ export function padZero(number: number) {
   }
 }
 
+export function captialize(word: any) {
+  return word.charAt(0).toUpperCase()+word.substring(1)
+}
+
 export function adjustName(name: string) {
-  const title = name.split('-').join(' ')
+  const title = name.split('-').map((word) => captialize(word)).join(' ')
 
   if (!name || name == 'undefined') return 'PokéTracker'
-  else if (name.split('-').length === 2) return name.split('-').join(' & ')
-  else if (title.includes('and')) return title.split('and').join('&')
-  else if (title.includes('lets')) {
-    return title.split('lets').join("& let's").slice(2)
-  } else if (title.includes('ultra')) {
-    return title.split('ultra').join("& ultra").slice(2)
-  } else if (title.includes('alpha')) {
-    return title.split('alpha').join("& alpha")
+  else if (name.split('-').length === 2 && name !== 'legends-arceus') {
+    return name.split('-').map((word) => captialize(word)).join(' & ')
+  } else if (title.includes('And')) {
+    return title.split('And').join('&')
+  } else if (title.includes('Lets')) {
+    return title.split('Lets').join("& Let's").slice(2)
+  } else if (title.includes('Ultra')) {
+    return title.split('Ultra').join("& Ultra").slice(2)
+  } else if (title.includes('Alpha')) {
+    return title.split('Alpha').join("& Alpha")
   } else if (title.includes('2')) {
     return title.split('2').join('2 &').slice(0,-2)
   } else return title

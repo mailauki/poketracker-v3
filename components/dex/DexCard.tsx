@@ -1,9 +1,12 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { LinearProgress, Link as Anchor, Stack, Box, IconButton, Chip, Typography } from "@mui/material"
 import { Edit, Star } from "@mui/icons-material"
-import { hyphenate } from "@/utils/helper"
+import { adjustName, hyphenate } from "@/utils/helper"
+import { usePathname, useRouter } from "next/navigation"
+import { createClient } from "@/utils/supabase/client"
+import { Database } from "@/utils/types"
 
 interface Dex {
   dex: {
@@ -19,12 +22,29 @@ interface Dex {
 
 export default function DexCard({ dex }: Dex) {
   const [progress, setProgress] = useState(67.4)
+  const pathname = usePathname()
+  // console.log(pathname)
+  const supabase = createClient()
+  const router = useRouter()
+
+  useEffect(() => {
+    const channel = supabase
+      .channel('*')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'pokedexes' }, () =>
+        router.refresh()
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [router, supabase])
 
   return (
     <Stack spacing={1}>
       <Stack direction='row' justifyContent='space-between'>
         <Stack direction='row' alignItems='center' spacing={1}>
-          <Anchor variant="h5" href={`/${hyphenate(dex.title)}`}>{dex.title || 'Dex Title'}</Anchor>
+          <Anchor variant="h5" href={`${pathname}/${hyphenate(dex.title)}`}>{dex.title || 'Dex Title'}</Anchor>
           <IconButton size='small'>
             <Edit fontSize='small' />
           </IconButton>
@@ -34,6 +54,7 @@ export default function DexCard({ dex }: Dex) {
           {dex.shiny && <Star fontSize="small" color="error" />}
           <Chip label={dex.type || 'Dex Type'} />
           {/* <Chip label='Customization' /> */}
+          <Chip label={adjustName(dex.game) || 'Game'} />
         </Stack>
       </Stack>
 

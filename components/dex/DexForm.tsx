@@ -6,16 +6,17 @@ import { Close } from "@mui/icons-material"
 import { Game } from "@/utils/types"
 import { adjustName, hyphenate } from "@/utils/helper"
 import { createClient } from "@/utils/supabase/client"
+import { usePathname } from "next/navigation"
 
 export default function DexForm() {
   const [games, setGames] = useState<Array<Game>>([])
   const supabase = createClient()
   const [loading, setLoading] = useState(true)
-  const [username, setUsername] = useState<string | null>(null)
   const [title, setTitle] = useState<string | null>(null)
   const [game, setGame] = useState<string | null>('home')
   const [type, setType] = useState<string | null>(null)
   const [shiny, setShiny] = useState<boolean>(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     fetch("https://pokeapi.co/api/v2/version-group?limit=27")
@@ -122,7 +123,7 @@ export default function DexForm() {
               label='Title'
               name='title'
               required
-              helperText={`/username/${hyphenate(title! || "Living Dex")}`}
+              helperText={`${pathname}/${hyphenate(title! || "Living Dex")}`}
               placeholder="Living Dex"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
@@ -168,6 +169,8 @@ export default function DexForm() {
                 onChange={(event) => setType(event.target.value)}
               >
                 <FormControlLabel value="National" control={<Radio />} label="National" />
+                <FormControlLabel value="Regional" control={<Radio />} label="Regional" />
+                <FormControlLabel value="Collective" control={<Radio />} label="Collective" />
               </RadioGroup>
             </FormControl>
 
