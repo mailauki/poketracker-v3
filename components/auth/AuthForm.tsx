@@ -104,6 +104,14 @@ export default function AuthForm({
             name='email'
             required
           />
+          {!haveAccount && (
+            <TextField
+              label='Username'
+              type='text'
+              name='username'
+              required
+            />
+          )}
           <TextField
             label='Password'
             type={showPassword ? 'text' : 'password'}

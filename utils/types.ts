@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { Key, ReactElement } from "react";
 
 export interface Pokemon {
   entry_number: number,
@@ -8,8 +8,25 @@ export interface Pokemon {
   }
 }
 
+export interface Dex {
+  id: Key;
+  title: string,
+  game: string,
+  type: string,
+  shiny: boolean,
+  username: string,
+  pokemon: { number: string }[]
+}
+
+export interface DexProps {
+  dex: Dex | null
+}
+
+export type Captured = { number: string }[]
+
 export interface PokeProps {
-  pokemon: Pokemon;
+  pokemon: Pokemon
+  captured: Captured
 }
 
 export interface Sprites {
@@ -34,10 +51,10 @@ export interface Pokedex {
 }
 
 export interface LinkButtonProps {
-  label?: string;
-  href: string;
-  selected?: boolean;
-  value?: string,
+  label?: string
+  href: string
+  selected?: boolean
+  value?: string
   icon?: ReactElement
 }
 
@@ -50,19 +67,57 @@ export interface Database {
         Row: {
           // the data expected from .select()
           id: number
-          name: string
+          title: string
+          game: string,
+          type: string,
+          shiny: boolean,
+          username: string,
+          pokemon: { number: string }[]
           data: Json | null
         }
         Insert: {
           // the data to be passed to .insert()
           id?: never // generated columns must not be supplied
-          name: string // `not null` columns with no default must be supplied
+          title: string // `not null` columns with no default must be supplied
+          game?: string,
+          type?: string,
+          shiny?: boolean,
+          username?: string,
+          pokemon?: { number: string }[]
           data?: Json | null // nullable columns can be omitted
         }
         Update: {
           // the data to be passed to .update()
           id?: never
-          name?: string // `not null` columns are optional on .update()
+          title?: string // `not null` columns are optional on .update()
+          game?: string,
+          type?: string,
+          shiny?: boolean,
+          username?: string,
+          pokemon?: { number: string }[]
+          data?: Json | null
+        }
+      },
+      pokemon: {
+        Row: {
+          // the data expected from .select()
+          id: number
+          number: string
+          pokedex: Key
+          data: Json | null
+        }
+        Insert: {
+          // the data to be passed to .insert()
+          id?: never // generated columns must not be supplied
+          number: string // `not null` columns with no default must be supplied
+          pokedex?: Key
+          data?: Json | null // nullable columns can be omitted
+        }
+        Update: {
+          // the data to be passed to .update()
+          id?: never
+          number?: string // `not null` columns are optional on .update()
+          pokedex?: Key
           data?: Json | null
         }
       }

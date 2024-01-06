@@ -4,11 +4,19 @@ import DexCard from "@/components/dex/DexCard"
 import DexContainer from "@/components/dex/DexContainer"
 import { createClient } from "@/utils/supabase/server"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { Metadata } from "next"
 // import { createClient } from '@/utils/supabase/client'
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { Dex } from "@/utils/types"
 
-export default async function ProfilePage({ params: { slug } }: { params: { slug: string } }) {
+export const metadata: Metadata = {
+  title: 'Account',
+  icons: {
+    icon: '/pokeball-dark.png'
+  }
+}
+export default async function ProfilePage({ params: { username } }: { params: { username: string } }) {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
@@ -27,9 +35,11 @@ export default async function ProfilePage({ params: { slug } }: { params: { slug
     game,
     type,
     shiny,
-    user,
-    user_id
-  `).match({ user: slug })
+    username,
+    pokemon (
+      number
+    )
+  `).match({ username: username })
   // const { data } = await supabase.from('pokedexes').select()
 
 
@@ -37,7 +47,7 @@ export default async function ProfilePage({ params: { slug } }: { params: { slug
     <Main>
       {/* <h1>User {params?.slug}</h1> */}
       {/* <pre>{JSON.stringify(pokedexes, null, 2)}</pre> */}
-      <Profile username={slug} pokedexes={pokedexes} />
+      <Profile username={username} pokedexes={pokedexes} />
     </Main>
   )
 }

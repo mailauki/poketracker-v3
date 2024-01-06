@@ -17,8 +17,8 @@ export default function GamePage({ params }: { params: { game: string } }) {
   return (
     <Main>
       {/* <Toolbar sx={{ mb: 2 }} /> */}
-      {/* <h1>Game {params.slug}</h1> */}
-      <Pokedexes game={params.game} />
+      <h1>Game {params.game}</h1>
+      {/* <Pokedexes game={params.game} /> */}
     </Main>
   )
 }

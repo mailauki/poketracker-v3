@@ -8,6 +8,7 @@ export async function POST(request: Request) {
   const formData = await request.formData()
   const email = String(formData.get('email'))
   const password = String(formData.get('password'))
+  const username = String(formData.get('username'))
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
@@ -15,6 +16,9 @@ export async function POST(request: Request) {
     email,
     password,
     options: {
+      data: {
+        username
+      },
       emailRedirectTo: `${requestUrl.origin}/auth/callback`,
     },
   })

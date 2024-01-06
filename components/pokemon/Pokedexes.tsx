@@ -3,10 +3,10 @@
 import { Box, Container, Divider, Stack, Tab, Tabs } from "@mui/material"
 import { useEffect, useState } from "react"
 import PokeCard from "./PokeCard"
-import { Pokedex, Pokemon } from "@/utils/types"
+import { Pokedex, Pokemon, Captured } from "@/utils/types"
 import Loading from "@/app/loading"
 
-export default function Pokedexes({ game }: { game: string }) {
+export default function Pokedexes({ game, captured }: { game: string, captured: Captured }) {
   const [pokedexes, setPokedexes] = useState<Array<Pokedex>>([])
   const [pokedex, setPokedex] = useState<string>('')
   const [pokemonEntries, setPokemonEntries] = useState<Array<Pokemon>>([])
@@ -72,6 +72,7 @@ export default function Pokedexes({ game }: { game: string }) {
           <PokeCard
             key={pokemon.entry_number}
             pokemon={pokemon}
+            captured={captured}
           />
         )}
       </Stack>

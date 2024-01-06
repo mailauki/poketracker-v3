@@ -4,13 +4,15 @@ import { useEffect, useState } from "react"
 import { PokeProps, Sprites } from "@/utils/types"
 import Image from "next/image"
 import Loading from "@/app/loading"
-import { More, MoreVert } from "@mui/icons-material"
+import { MoreVert } from "@mui/icons-material"
 
-export default function PokeCard({ pokemon }: PokeProps) {
+export default function PokeCard({ pokemon, captured }: PokeProps) {
   const [sprites, setSprites] = useState<Sprites | undefined>(undefined)
   const [loading, setLoading] = useState(false)
-  const [captured, setCaptured] = useState(false)
-  console.log(pokemon)
+  const [isCaptured, setIsCaptured] = useState(captured!.find((mon: any) => mon.number === pokemon.pokemon_species.url.split('/')[6]) || false)
+
+  // console.log(pokemon.pokemon_species.url.split('/')[6])
+  // console.log(captured)
 
   useEffect(() => {
     fetch(pokemon.pokemon_species.url)
@@ -32,12 +34,12 @@ export default function PokeCard({ pokemon }: PokeProps) {
   return (
     <Card
       sx={{ width: 150, height: 150, position: 'relative' }}
-      // elevation={captured ? 0 : 1}
-      variant={captured ? "outlined" : "elevation"}
+      // elevation={isCaptured ? 0 : 1}
+      variant={isCaptured ? "outlined" : "elevation"}
     >
       <CardActionArea
         sx={{ width: '100%', height: '100%' }}
-        onClick={() => setCaptured(!captured)}
+        onClick={() => setIsCaptured(!isCaptured)}
       >
         <Box
           sx={{
@@ -63,7 +65,7 @@ export default function PokeCard({ pokemon }: PokeProps) {
                   width: 100,
                   height: 100,
                   mx: 'auto',
-                  filter: captured ? '' : 'grayscale(100%) brightness(0) invert(1) opacity(0.5)'
+                  filter: isCaptured ? '' : 'grayscale(100%) brightness(0) invert(1) opacity(0.5)'
                 }}
                 image={sprites?.front_default}
                 alt={pokemon.pokemon_species.name}
