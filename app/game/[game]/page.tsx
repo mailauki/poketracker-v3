@@ -12,13 +12,13 @@ export const metadata: Metadata = {
   }
 }
 
-export default function GamePage({ params }: { params: { slug: string } }) {
+export default function GamePage({ params }: { params: { game: string } }) {
   
   return (
     <Main>
       {/* <Toolbar sx={{ mb: 2 }} /> */}
       {/* <h1>Game {params.slug}</h1> */}
-      <Pokedexes slug={params.slug} />
+      <Pokedexes game={params.game} />
     </Main>
   )
 }

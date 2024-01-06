@@ -34,18 +34,11 @@ export default function Profile({ username, pokedexes }: { username: string, pok
   }, [router, supabase])
 
   return (
-    <Container maxWidth='sm' sx={{ pt: 2 }}>
+    <Container maxWidth='md' sx={{ pt: 2 }}>
       <Typography variant='h4' textAlign='center'>
         {`${username ? `${username}'s` : 'Your'} Account`}
       </Typography>
 
-      {/* <Stack spacing={4}>
-        <Typography textAlign='center'>
-          {'-> dexes go here <-'}
-        </Typography>
-
-        <DexForm />
-      </Stack> */}
       <DexContainer pokedexes={dexes} />
     </Container>
   )

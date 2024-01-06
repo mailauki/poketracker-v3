@@ -24,6 +24,14 @@
   transition: background 200ms, border 200ms;
 }
 
+.not-mobile {
+  display: inherit;
+}
+
+.mobile {
+  display: none;
+}
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
 }
@@ -42,6 +50,14 @@
     margin-bottom: 120px;
     max-width: 320px;
     text-align: center;
+  }
+
+  .not-mobile {
+    display: none;
+  }
+
+  .mobile {
+    display: inherit;
   }
 }
 

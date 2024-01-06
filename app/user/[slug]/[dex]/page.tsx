@@ -1,3 +1,5 @@
+import Main from "@/components/Main"
+import Pokedexes from "@/components/pokemon/Pokedexes"
 import { createClient } from "@/utils/supabase/server"
 import { Toolbar } from "@mui/material"
 import { cookies } from "next/headers"
@@ -16,22 +18,26 @@ export default async function DexPage({ params: { slug, dex } }: { params: { slu
     redirect('/login')
   }
 
-  const { data: pokedexes } = await supabase.from('pokedexes').select(`
+  const { data: pokedex } = await supabase.from('pokedexes')
+  .select(`
     id,
     title,
     game,
     type,
     shiny,
     user
-  `).match({ user: slug }).ilike('title', dex.split("-").join(" "))
+  `)
+  .match({ user: slug })
+  .ilike('title', dex.split("-").join(" "))
+  .single()
 
   return (
-    <>
-      <Toolbar />
-      <h1>Dex Page</h1>
+    <Main>
+      {/* <h1>Dex Page</h1>
       <p>Dex Name: {dex}</p>
       <p>Username: {slug}</p>
-      <pre>{JSON.stringify(pokedexes, null, 2)}</pre>
-    </>
+      <pre>{JSON.stringify(pokedex, null, 2)}</pre> */}
+      <Pokedexes game={pokedex!.game} />
+    </Main>
   )
 }

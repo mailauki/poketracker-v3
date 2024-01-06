@@ -9,9 +9,9 @@ export default function Main({
   children: React.ReactNode
 }) {
   return (
-    <main className={styles.main}>
+    <Box component="main" className={styles.main}>
       <Toolbar />
       {children}
-    </main>
+    </Box>
   )
 }

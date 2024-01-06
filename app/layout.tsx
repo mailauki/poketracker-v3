@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Header from '../components/Header'
 import './globals.css'
 import styles from "./page.module.css"
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter'
@@ -8,7 +7,9 @@ import Theme from '@/utils/theme'
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import { CssBaseline, Toolbar } from '@mui/material'
+import Header from '@/components/Header'
 import Main from '@/components/Main'
+import Footer from '@/components/Footer'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -36,7 +37,8 @@ export default async function RootLayout({
           <AppRouterCacheProvider>
             <Header session={session} />
             {children}
-            <footer></footer>
+            {/* <footer></footer> */}
+            <Footer />
           </AppRouterCacheProvider>
         </body>
       </html>

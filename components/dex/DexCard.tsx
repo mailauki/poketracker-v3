@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { LinearProgress, Link as Anchor, Stack, Box, IconButton, Chip, Typography } from "@mui/material"
+import { LinearProgress, Link as Anchor, Stack, Box, IconButton, Chip, Typography, useMediaQuery, useTheme } from "@mui/material"
 import { Edit, Star } from "@mui/icons-material"
 import { adjustName, hyphenate } from "@/utils/helper"
 import { usePathname, useRouter } from "next/navigation"
@@ -26,6 +26,9 @@ export default function DexCard({ dex }: Dex) {
   // console.log(pathname)
   const supabase = createClient()
   const router = useRouter()
+  const matches = useMediaQuery('(max-width: 700px)')
+  // const theme = useTheme()
+  // const matches = useMediaQuery(theme.breakpoints.up('sm'))
 
   useEffect(() => {
     const channel = supabase
@@ -44,18 +47,25 @@ export default function DexCard({ dex }: Dex) {
     <Stack spacing={1}>
       <Stack direction='row' justifyContent='space-between'>
         <Stack direction='row' alignItems='center' spacing={1}>
-          <Anchor variant="h5" href={`${pathname}/${hyphenate(dex.title)}`}>{dex.title || 'Dex Title'}</Anchor>
+          <Anchor
+            variant="h5"
+            noWrap
+            href={`${pathname}/${hyphenate(dex.title)}`}
+          >
+            {dex.title || 'Dex Title'}
+          </Anchor>
           <IconButton size='small'>
             <Edit fontSize='small' />
           </IconButton>
         </Stack>
 
-        <Stack direction='row' alignItems='center' spacing={1}>
-          {dex.shiny && <Star fontSize="small" color="error" />}
-          <Chip label={dex.type || 'Dex Type'} />
-          {/* <Chip label='Customization' /> */}
-          <Chip label={adjustName(dex.game) || 'Game'} />
-        </Stack>
+        {!matches && (
+          <Stack direction='row' alignItems='center' spacing={1} flexWrap='wrap' useFlexGap justifyContent='flex-end'>
+            {dex.shiny && <Star fontSize="small" color="error" />}
+            <Chip label={dex.type || 'Dex Type'} />
+            <Chip label={adjustName(dex.game) || 'Game'} />
+          </Stack>
+        )}
       </Stack>
 
       <Box sx={{ position: 'relative' }}>
@@ -74,11 +84,23 @@ export default function DexCard({ dex }: Dex) {
             alignItems='center'
             width='100%'
             height='100%'
+            direction={{ xs: 'column', sm: 'row' }}
           >
-            <Typography variant="overline" color="secondary.contrastText">
-              <b>{progress}%</b> DONE! (<b>408</b> CAUGHT, <b>197</b> TO GO)
-            </Typography>
+            {matches ? (
+              <Typography variant="overline" color="secondary.contrastText">
+                <b>{progress}%</b> DONE!
+              </Typography>
+            ) : (
+              <Typography variant="overline" color="secondary.contrastText">
+                <b>{progress}%</b> DONE! (<b>408</b> CAUGHT, <b>197</b> TO GO)
+              </Typography>
+            )}
           </Stack>
+          {matches && (
+            <Typography variant="overline">
+              (<b>408</b> CAUGHT, <b>197</b> TO GO)
+            </Typography>
+          )}
         </Box>
 
         <LinearProgress
