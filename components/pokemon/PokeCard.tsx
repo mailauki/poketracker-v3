@@ -14,6 +14,11 @@ export default function PokeCard({ pokemon, captured }: PokeProps) {
   // console.log(pokemon.pokemon_species.url.split('/')[6])
   // console.log(captured)
 
+  function handleCapture() {
+    setIsCaptured(!isCaptured)
+    console.log(pokemon.pokemon_species.url.split('/')[6])
+  }
+
   useEffect(() => {
     fetch(pokemon.pokemon_species.url)
     .then((res) => res.json())
@@ -39,7 +44,7 @@ export default function PokeCard({ pokemon, captured }: PokeProps) {
     >
       <CardActionArea
         sx={{ width: '100%', height: '100%' }}
-        onClick={() => setIsCaptured(!isCaptured)}
+        onClick={handleCapture}
       >
         <Box
           sx={{

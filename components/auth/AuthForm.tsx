@@ -5,22 +5,20 @@ import { useState } from 'react'
 import { Alert, Button, Container, Divider, Link as Anchor, Stack, TextField, Toolbar, Typography, useTheme, InputAdornment, IconButton } from '@mui/material'
 import { ChevronLeft } from '@mui/icons-material'
 // import { useFormStatus } from 'react-dom'
-// import { Auth } from '@supabase/auth-ui-react'
-// import { ThemeSupa } from '@supabase/auth-ui-shared'
-// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-// import { Database } from '@/utils/types'
-// import { purple } from '@mui/material/colors'
+import { Auth } from '@supabase/auth-ui-react'
+import { ThemeSupa } from '@supabase/auth-ui-shared'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { Database } from '@/utils/types'
+import { purple } from '@mui/material/colors'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 export default function AuthForm({
   searchParams
 }: {
-  searchParams: { message: string },
-  // signIn: (formData: FormData) => void,
-  // signUp: (formData: FormData) => void
+  searchParams: { message: string }
 }) {
-  // const supabase = createClientComponentClient<Database>()
-  // const theme = useTheme()
+  const supabase = createClientComponentClient<Database>()
+  const theme = useTheme()
   const [showPassword, setShowPassword] = useState(false)
   const [haveAccount, setHaveAccount] = useState(true)
 
@@ -34,6 +32,14 @@ export default function AuthForm({
     event.preventDefault()
     setHaveAccount(!haveAccount)
   }
+  
+  // async function handleSignInWithGoogle(response) {
+  //   const { data, error } = await supabase.auth.signInWithIdToken({
+  //     provider: 'google',
+  //     token: response.credential,
+  //     nonce: 'NONCE', // must be the same one as provided in data-nonce (if any)
+  //   })
+  // }
 
   return (
     <>
@@ -87,9 +93,21 @@ export default function AuthForm({
           theme={theme.palette.mode}
           providers={[]}
           redirectTo='/auth/callback'
+        /> */}
+
+        <Auth
+          supabaseClient={supabase}
+          view='sign_in'
+          appearance={{ theme: ThemeSupa }}
+          theme={theme.palette.mode}
+          providers={[ 'google' ]}
+          // redirectTo='https://xpkcosrvewdjotifnjgq.supabase.co/auth/v1/callback'
+          // redirectTo='/auth/callback'
+          redirectTo='/auth/login/google'
+          onlyThirdPartyProviders
         />
 
-        <Divider sx={{ mb: 3 }} /> */}
+        <Divider sx={{ mb: 3 }} />
 
         <Stack
           direction='column'
