@@ -12,8 +12,6 @@ export default function Main({
     <Box
       component="main"
       className={styles.main}
-      // square
-      // elevation={0}
     >
       <Toolbar />
       {children}

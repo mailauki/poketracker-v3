@@ -1,25 +1,24 @@
 'use client'
 
-import Link from 'next/link'
+// import Link from 'next/link'
 import { useState } from 'react'
-import { Alert, Button, Container, Divider, Link as Anchor, Stack, TextField, useTheme, InputAdornment, IconButton } from '@mui/material'
+import { Alert, Button, Container, Divider, Link as Anchor, Stack, TextField, InputAdornment, IconButton } from '@mui/material'
 // import { useFormStatus } from 'react-dom'
-import { Auth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Database } from '@/utils/types'
+// import { Auth } from '@supabase/auth-ui-react'
+// import { ThemeSupa } from '@supabase/auth-ui-shared'
+// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+// import { Database } from '@/utils/types'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { createClient } from '@/utils/supabase/client'
-import { useRouter } from 'next/navigation'
+// import { createClient } from '@/utils/supabase/client'
+// import { useRouter } from 'next/navigation'
 
 export default function AuthForm({
   searchParams
 }: {
   searchParams: { message: string }
 }) {
-  const supabase = createClientComponentClient<Database>()
+  // const supabase = createClientComponentClient<Database>()
   // const supabase = createClient()
-  const theme = useTheme()
   const [showPassword, setShowPassword] = useState(false)
   const [haveAccount, setHaveAccount] = useState(true)
 
@@ -34,13 +33,13 @@ export default function AuthForm({
     setHaveAccount(!haveAccount)
   }
   
-  async function handleSignInWithGoogle(response: any) {
-    const { data, error } = await supabase.auth.signInWithIdToken({
-      provider: 'google',
-      token: response.credential,
-      nonce: 'NONCE', // must be the same one as provided in data-nonce (if any)
-    })
-  }
+  // async function handleSignInWithGoogle(response: any) {
+  //   const { data, error } = await supabase.auth.signInWithIdToken({
+  //     provider: 'google',
+  //     token: response.credential,
+  //     nonce: 'NONCE', // must be the same one as provided in data-nonce (if any)
+  //   })
+  // }
   
   // const router = useRouter()
 
@@ -55,15 +54,6 @@ export default function AuthForm({
 
   return (
     <>
-      {/* <Button
-        startIcon={<ChevronLeft />}
-        component={Link}
-        href='/'
-        sx={{ ml: 2 }}
-      >
-        Back
-      </Button> */}
-
       <Container maxWidth='xs' sx={{ pt: 2 }}>
         {/* <Auth
           supabaseClient={supabase}

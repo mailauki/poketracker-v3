@@ -52,7 +52,7 @@ export default async function DexPage({ params: { username, dex } }: { params: {
 
   if (!pokedex) return <Loading />
 
-  console.log(pokedex)
+  // console.log(pokedex)
 
   return (
     <Main>

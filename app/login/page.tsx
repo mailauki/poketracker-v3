@@ -16,9 +16,7 @@ export default function Login({
 }) {
   return (
     <Main>
-      <AuthForm
-        searchParams={searchParams}
-      />
+      <AuthForm searchParams={searchParams} />
     </Main>
   )
 }

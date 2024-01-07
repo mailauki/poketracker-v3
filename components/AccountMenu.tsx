@@ -13,14 +13,6 @@ import Loading from "@/app/loading"
 type Profiles = Database['public']['Tables']['profiles']['Row']
 
 export default function AccountMenu({ username, avatar_url }: { username: string, avatar_url: string }) {
-  // const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  // const open = Boolean(anchorEl);
-  // const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget)
-  // }
-  // const handleClose = () => {
-  //   setAnchorEl(null)
-  // }
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
 
@@ -141,12 +133,6 @@ export default function AccountMenu({ username, avatar_url }: { username: string
                   Account Settings
                 </MenuItem>
                 <Divider />
-                {/* <MenuItem component={Link} href="/login">
-                  <ListItemIcon>
-                    <Login fontSize="small" />
-                  </ListItemIcon>
-                  Login
-                </MenuItem> */}
                 <form
                   action='/auth/signout'
                   method='post'

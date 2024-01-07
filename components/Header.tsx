@@ -38,7 +38,7 @@ export default async function Header({ session }: { session: Session | null }) {
     .eq('id', session?.user?.id)
     .single()
 
-  console.log(profile)
+  // console.log(profile)
 
   return (
     <>
