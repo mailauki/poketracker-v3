@@ -5,6 +5,7 @@ import SignOut from './SignOutBtn'
 import Login from './LoginBtn'
 import ProfileBtn from './ProfileBtn'
 import Link from 'next/link'
+import SignOutBtn from './SignOutBtn'
 
 export default async function AuthButton() {
   const cookieStore = cookies()
@@ -30,8 +31,8 @@ export default async function AuthButton() {
       {/* Hey, {user.email}! */}
       Hello, {profile?.username}!
       <ProfileBtn username={profile?.username} />
-      <form action='/auth/signout' method='post'>
-        <SignOut />
+      <form action='/auth/signout' method='post' style={{ width: '100%' }}>
+        <SignOutBtn />
       </form>
     </div>
   ) : (

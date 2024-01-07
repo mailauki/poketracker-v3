@@ -2,15 +2,15 @@
 
 import Link from 'next/link'
 import { useState } from 'react'
-import { Alert, Button, Container, Divider, Link as Anchor, Stack, TextField, Toolbar, Typography, useTheme, InputAdornment, IconButton } from '@mui/material'
-import { ChevronLeft } from '@mui/icons-material'
+import { Alert, Button, Container, Divider, Link as Anchor, Stack, TextField, useTheme, InputAdornment, IconButton } from '@mui/material'
 // import { useFormStatus } from 'react-dom'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Database } from '@/utils/types'
-import { purple } from '@mui/material/colors'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { createClient } from '@/utils/supabase/client'
+import { useRouter } from 'next/navigation'
 
 export default function AuthForm({
   searchParams
@@ -18,6 +18,7 @@ export default function AuthForm({
   searchParams: { message: string }
 }) {
   const supabase = createClientComponentClient<Database>()
+  // const supabase = createClient()
   const theme = useTheme()
   const [showPassword, setShowPassword] = useState(false)
   const [haveAccount, setHaveAccount] = useState(true)
@@ -33,13 +34,24 @@ export default function AuthForm({
     setHaveAccount(!haveAccount)
   }
   
-  // async function handleSignInWithGoogle(response) {
-  //   const { data, error } = await supabase.auth.signInWithIdToken({
-  //     provider: 'google',
-  //     token: response.credential,
-  //     nonce: 'NONCE', // must be the same one as provided in data-nonce (if any)
-  //   })
-  // }
+  async function handleSignInWithGoogle(response: any) {
+    const { data, error } = await supabase.auth.signInWithIdToken({
+      provider: 'google',
+      token: response.credential,
+      nonce: 'NONCE', // must be the same one as provided in data-nonce (if any)
+    })
+  }
+  
+  // const router = useRouter()
+
+  // const { data } = supabase.auth.onAuthStateChange(
+  //   async (event, session) => {
+  //     console.log("auth state changed: ", session);
+  //     if (session) {
+  //       router.push('/account');
+  //     }
+  //   }
+  // )
 
   return (
     <>
@@ -95,19 +107,22 @@ export default function AuthForm({
           redirectTo='/auth/callback'
         /> */}
 
-        <Auth
+        {/* <Auth
           supabaseClient={supabase}
           view='sign_in'
           appearance={{ theme: ThemeSupa }}
           theme={theme.palette.mode}
-          providers={[ 'google' ]}
-          // redirectTo='https://xpkcosrvewdjotifnjgq.supabase.co/auth/v1/callback'
-          // redirectTo='/auth/callback'
-          redirectTo='/auth/login/google'
+          providers={[ 'google', 'github' ]}
+          redirectTo='http://localhost:3000/auth/callback'
           onlyThirdPartyProviders
-        />
+        /> */}
 
-        <Divider sx={{ mb: 3 }} />
+        {/* <button onClick={handleSignInWithGoogle}>Sign in with Google</button>
+        <form action="/auth/login/google">
+          <button type="submit">Sign in with Google</button>
+        </form> */}
+
+        {/* <Divider sx={{ mb: 3 }} /> */}
 
         <Stack
           direction='column'
@@ -121,6 +136,7 @@ export default function AuthForm({
             type='text'
             name='email'
             required
+            // helperText={haveAccount ? '' : 'This cannot be changed later.'}
           />
           {!haveAccount && (
             <TextField
@@ -175,7 +191,7 @@ export default function AuthForm({
             {haveAccount ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
           </Anchor>
           {searchParams?.message && (
-            <Alert severity='warning'>
+            <Alert severity={searchParams.message.includes('not') ? 'error' : 'info'}>
               {searchParams.message}
             </Alert>
           )}

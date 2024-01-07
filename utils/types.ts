@@ -63,6 +63,29 @@ export type Json = string | number | boolean | null | { [key: string]: Json | un
 export interface Database {
   public: {
     Tables: {
+      profiles: {
+        Row: {
+          // the data expected from .select()
+          id: number
+          username: string
+          avatar_url: string
+          data: Json | null
+        }
+        Insert: {
+          // the data to be passed to .insert()
+          id?: never // generated columns must not be supplied
+          username: string // `not null` columns with no default must be supplied
+          avatar_url?: string
+          data?: Json | null // nullable columns can be omitted
+        }
+        Update: {
+          // the data to be passed to .update()
+          id?: never
+          username?: string // `not null` columns are optional on .update()
+          avatar_url?: string
+          data?: Json | null
+        }
+      },
       pokedexes: {
         Row: {
           // the data expected from .select()

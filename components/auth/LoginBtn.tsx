@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { Button } from '@mui/material'
 import LoginIcon from '@mui/icons-material/Login'
 
-export default function Login() {
+export default function LoginBtn() {
   return (
     <Button
       variant='outlined'

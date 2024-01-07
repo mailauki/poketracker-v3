@@ -85,6 +85,7 @@ export default function DexForm() {
     <>
       <Button
         variant='contained'
+        size="large"
         onClick={handleClickOpen}
       >
         Create New Dex

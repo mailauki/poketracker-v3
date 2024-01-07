@@ -22,9 +22,7 @@ export async function POST(request: Request) {
 
   // console.log(data.session.user)
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
 
   // console.log({user})
   

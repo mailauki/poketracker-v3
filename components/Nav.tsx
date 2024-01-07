@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Button, Divider, List, ListItemButton, ListItemIcon, ListItemText, Tab, Tabs, useTheme } from "@mui/material"
+import { Avatar, Box, Button, Divider, IconButton, List, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Stack, Tab, Tabs, Tooltip, Typography, useTheme } from "@mui/material"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { Game, LinkButtonProps } from "@/utils/types"
@@ -9,16 +9,16 @@ import { Person, Settings, CatchingPokemon, Login, Logout } from "@mui/icons-mat
 import { adjustName } from "@/utils/helper"
 
 export default function Nav() {
-  const [games, setGames] = useState<Array<Game>>([])
+  // const [games, setGames] = useState<Array<Game>>([])
   const pathname = usePathname()
   const theme = useTheme()
   const [value, setValue] = useState<string>(pathname)
 
-  useEffect(() => {
-    fetch("https://pokeapi.co/api/v2/version-group?limit=27")
-    .then((res) => res.json())
-    .then((data) => setGames(data.results))
-  }, [])
+  // useEffect(() => {
+  //   fetch("https://pokeapi.co/api/v2/version-group?limit=27")
+  //   .then((res) => res.json())
+  //   .then((data) => setGames(data.results))
+  // }, [])
 
   useEffect(() => {
     setValue(pathname)
@@ -104,7 +104,7 @@ export default function Nav() {
           </ListItemButton>
         </form>
 
-        <Divider />
+        {/* <Divider />
 
         {games.map((game) => 
           <LinkButton
@@ -113,7 +113,7 @@ export default function Nav() {
             value={`/game/${game.name}`}
             label={`${adjustName(game.name)}`}
           />
-        )}
+        )} */}
       </List>
     </Box>
   )

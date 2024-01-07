@@ -24,9 +24,7 @@ export async function POST(request: Request) {
   //   status: 302,
   // })
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
 
   if (user) {
     await supabase.auth.signOut()

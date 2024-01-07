@@ -1,7 +1,7 @@
 'use client'
 
 import styles from "../app/page.module.css"
-import { Box, Toolbar } from "@mui/material"
+import { Box, Paper, Toolbar } from "@mui/material"
 
 export default function Main({
   children,
@@ -9,7 +9,12 @@ export default function Main({
   children: React.ReactNode
 }) {
   return (
-    <Box component="main" className={styles.main}>
+    <Box
+      component="main"
+      className={styles.main}
+      // square
+      // elevation={0}
+    >
       <Toolbar />
       {children}
     </Box>

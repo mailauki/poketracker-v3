@@ -36,7 +36,7 @@ export default function Profile({ username, pokedexes }: { username: string, pok
   return (
     <Container maxWidth='md' sx={{ pt: 2 }}>
       <Typography variant='h4' textAlign='center'>
-        {`${username ? `${username}'s` : 'Your'} Account`}
+        {`${username ? `${username}'s` : 'Your'} Profile`}
       </Typography>
 
       <DexContainer pokedexes={dexes} />

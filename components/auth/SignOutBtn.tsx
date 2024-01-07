@@ -3,7 +3,7 @@
 import { Button } from '@mui/material'
 import LogoutIcon from '@mui/icons-material/Logout'
 
-export default function SignOut() {
+export default function SignOutBtn() {
   return (
     <Button
       type='submit'

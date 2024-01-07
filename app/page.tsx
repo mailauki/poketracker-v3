@@ -3,6 +3,7 @@ import AuthButton from "@/components/auth/AuthButton"
 import Image from "next/image"
 import { Stack, Toolbar } from '@mui/material'
 import Main from '@/components/Main'
+import { useSearchParams } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: {

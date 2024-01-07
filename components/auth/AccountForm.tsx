@@ -8,6 +8,7 @@ import SignOut from './SignOutBtn'
 // import { createClient } from '@/utils/supabase/server'
 // import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/client'
+import AvatarForm from '../AvatarForm'
 
 export default function AccountForm({ session }: { session: Session | null }) {
   // const supabase = createClientComponentClient<Database>()
@@ -75,9 +76,19 @@ export default function AccountForm({ session }: { session: Session | null }) {
 
   return (
     <Container maxWidth='xs' sx={{ pt: 2 }}>
-        <Typography variant='h4' textAlign='center'>
-          {`${username ? `${username}'s` : 'Your'} Account`}
-        </Typography>
+      <Typography variant='h4' textAlign='center'>
+        {`${username ? `${username}'s` : 'Your'} Account`}
+      </Typography>
+
+      <AvatarForm
+        uid={user!.id}
+        url={avatar_url!}
+        size={150}
+        onUpload={(url) => {
+          setAvatarUrl(url)
+          updateProfile({ username, avatar_url: url })
+        }}
+      />
 
       <TextField
         id='email'
