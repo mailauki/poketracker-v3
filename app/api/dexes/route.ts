@@ -15,18 +15,21 @@ export async function POST(request: Request) {
   const { data: { user } } = await supabase.auth.getUser()
   
   const { data: profile } = await supabase
-    .from('profiles')
-    .select('username')
-    .eq('id', user?.id)
-    .single()
+  .from('profiles')
+  .select('username')
+  .eq('id', user?.id)
+  .single()
 
-  const { data } = await supabase.from('pokedexes').insert({
+  const { data } = await supabase.from('pokedexes')
+  .insert({
     title,
     game,
     type,
-    user: profile?.username,
-    user_id: user?.id
-  }).select()
+    username: profile?.username,
+    user_id: user?.id,
+    entries: 0
+  })
+  .select()
 
   return NextResponse.json(data)
 }

@@ -72,19 +72,16 @@ export default function PokeCard({ pokemon, captured }: PokeProps) {
       <input
         name="number"
         defaultValue={number!}
-        // style={{ visibility: 'hidden' }}
         hidden
       />
       <input
         name="dex"
         defaultValue={dex}
-        // style={{ visibility: 'hidden' }}
         hidden
       />
       <CardActionArea
         sx={{ width: '100%', height: '100%' }}
         // onClick={handleCapture}
-        // onClick={addPokemon}
         type="submit"
       >
         <Box
@@ -111,7 +108,7 @@ export default function PokeCard({ pokemon, captured }: PokeProps) {
                   width: 100,
                   height: 100,
                   mx: 'auto',
-                  filter: isCaptured ? '' : 'grayscale(100%) brightness(0) invert(1) opacity(0.5)'
+                  filter: (theme) => isCaptured ? '' : `grayscale(100%) brightness(0) invert(${theme.palette.mode == 'dark' ? 1 : 0}) opacity(0.5)`
                 }}
                 image={sprites?.front_default}
                 alt={pokemon.pokemon_species.name}

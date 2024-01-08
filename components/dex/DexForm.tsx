@@ -16,6 +16,8 @@ export default function DexForm() {
   const [game, setGame] = useState<string | null>('home')
   const [type, setType] = useState<string | null>(null)
   const [shiny, setShiny] = useState<boolean>(false)
+  const [entries, setEntries] = useState<number>(0)
+  const [pokedexId, setPokedexId] = useState<string>('1')
   const pathname = usePathname()
 
   useEffect(() => {
@@ -23,6 +25,25 @@ export default function DexForm() {
     .then((res) => res.json())
     .then((data) => setGames(data.results))
   }, [])
+
+  useEffect(() => {
+    fetch(`https://pokeapi.co/api/v2/version-group/${game}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setPokedexId(data.pokedexes.map((dex: any) => dex.url)[0].split("/")[6])
+
+      return Promise.all(data.pokedexes.map((dex: any) => {
+        return fetch(dex.url)
+        .then((res) => res.json())
+        .then(dex_data => {
+          return dex_data.pokemon_entries.length
+        })
+      }))
+    })
+    .then((data) => {
+      setEntries(data.reduce((total, item) => total + item)
+    )})
+  }, [game])
 
   const [open, setOpen] = useState(false)
 
@@ -43,12 +64,16 @@ export default function DexForm() {
     title,
     game,
     type,
-    shiny
+    shiny,
+    entries,
+    number
   }: {
     title: string | null
     game: string | null
     type: string | null
-    shiny: boolean
+    shiny: boolean,
+    entries: number,
+    number: string | null
   }) {
     try {
       setLoading(true)
@@ -58,18 +83,20 @@ export default function DexForm() {
       } = await supabase.auth.getUser()
       
       const { data: profile } = await supabase
-        .from('profiles')
-        .select('username')
-        .eq('id', user?.id)
-        .single()
+      .from('profiles')
+      .select('username')
+      .eq('id', user?.id)
+      .single()
 
       const { error } = await supabase.from('pokedexes').insert({
         title,
         game,
         type,
         shiny,
-        user: profile?.username,
-        user_id: user?.id
+        username: profile?.username,
+        user_id: user?.id,
+        entries,
+        number
       })
       if (error) throw error
       alert('Dex added!')
@@ -209,7 +236,7 @@ export default function DexForm() {
             variant='contained'
             fullWidth
             autoFocus
-            onClick={() => addDex({ title, game, type, shiny })}
+            onClick={() => addDex({ title, game, type, shiny, entries, number: pokedexId })}
             sx={{ mt: 1, ml: 2, mb: 1, mr: 2 }}
           >
             Create

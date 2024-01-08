@@ -27,10 +27,10 @@ export async function POST(request: Request) {
   // console.log({user})
   
   const { data: profile } = await supabase
-    .from('profiles')
-    .select('username')
-    .eq('id', user?.id)
-    .single()
+  .from('profiles')
+  .select('username')
+  .eq('id', user?.id)
+  .single()
 
   // console.log({profile})
 

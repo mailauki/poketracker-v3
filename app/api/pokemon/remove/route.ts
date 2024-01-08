@@ -45,6 +45,7 @@ export async function POST(request: Request) {
   .match({ id: pokemon?.id, user_id: user?.id })
   // .eq('id', pokemon?.id)
   // .match({ number, pokedex: pokedex?.id, user_id: user?.id })
+  const { data } = await supabase.rpc('decrement_pokedexes', { row_id: pokedex?.id })
 
   // return NextResponse.json(data)
   return redirect(`/user/${profile?.username}/${dex}`)

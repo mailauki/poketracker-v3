@@ -1,8 +1,8 @@
 'use client'
 
 import { Chip, Container, Link as Anchor, Stack, Typography, useMediaQuery, IconButton, Tooltip, Button, TextField } from "@mui/material"
-import DexCard from "./dex/DexCard"
-import Progress from "./dex/Progress"
+import DexCard from "./DexCard"
+import Progress from "./Progress"
 import { adjustName } from "@/utils/helper"
 import { Star, IosShare as Share } from "@mui/icons-material"
 import { useParams } from "next/navigation"
@@ -46,7 +46,7 @@ export default function DexHeader({ dex }: any) {
           </Tooltip>
         </Stack>
 
-        <Progress />
+        <Progress captured={dex!.captured} entries={dex!.entries} />
       </Stack>
     </Container>
   )

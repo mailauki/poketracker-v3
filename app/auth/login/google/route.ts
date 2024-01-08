@@ -37,10 +37,10 @@ export async function POST(request: Request) {
   const { data: { user } } = await supabase.auth.getUser()
   
   const { data: profile } = await supabase
-    .from('profiles')
-    .select('username')
-    .eq('id', user?.id)
-    .single()
+  .from('profiles')
+  .select('username')
+  .eq('id', user?.id)
+  .single()
 
   return redirect(`/user/${profile?.username}`)
 

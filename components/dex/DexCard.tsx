@@ -35,6 +35,17 @@ export default function DexCard({ dex }: DexProps) {
     }
   }, [router, supabase])
 
+  // useEffect(() => {
+  //   // fetch(`https://pokeapi.co/api/v2/version-group/${dex?.game}`)
+  //   // .then((res) => res.json())
+  //   // .then((data) => {
+  //   //   console.log(data.pokedexes)
+  //   // })
+  //   fetch(`https://pokeapi.co/api/v2/pokedex/${28 || 1}`)
+  //   .then((res) => res.json())
+  //   .then((dat) => console.log(dat.pokemon_entries.length))
+  // }, [dex])
+
   if (!dex) return <Loading />
 
   return (
@@ -62,7 +73,7 @@ export default function DexCard({ dex }: DexProps) {
         )}
       </Stack>
 
-      <Progress />
+      <Progress captured={dex!.captured} entries={dex!.entries} />
     </Stack>
   )
 }

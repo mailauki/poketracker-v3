@@ -27,27 +27,34 @@ export async function POST(request: Request) {
   const { data: { user } } = await supabase.auth.getUser()
   
   const { data: profile } = await supabase
-    .from('profiles')
-    .select('username')
-    .eq('id', user?.id)
-    .single()
+  .from('profiles')
+  .select('username')
+  .eq('id', user?.id)
+  .single()
 
   const { data: pokedex } = await supabase
-    .from('pokedexes')
-    .select(`
-      id
-    `)
-    .match({ user_id: user?.id })
-    .ilike('title', dex.split("-").join(" "))
-    .single()
+  .from('pokedexes')
+  .select(`
+    id,
+    captured
+  `)
+  .match({ user_id: user?.id })
+  .ilike('title', dex.split("-").join(" "))
+  .single()
 
-  // console.log({pokedex})
+  console.log({pokedex})
   console.log({ number, pokedex: pokedex?.id, user_id: user?.id })
 
-    // const supabase = createServerActionClient<Database>({ cookies })
-  const { data } = await supabase.from('pokemon').insert({ number, pokedex: pokedex?.id, user_id: user?.id })
+  // const supabase = createServerActionClient<Database>({ cookies })
+  const { data: pokemon } = await supabase
+  .from('pokemon')
+  .insert({ number, pokedex: pokedex?.id, user_id: user?.id })
+  .select()
+  .single()
+
+  const { data } = await supabase.rpc('increment_pokedexes', { row_id: pokedex?.id })
+
   // revalidatePath('/')
-  // console.log({data})
 
   // return NextResponse.json(data)
   return redirect(`/user/${profile?.username}/${dex}`)

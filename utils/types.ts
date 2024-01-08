@@ -15,6 +15,8 @@ export interface Dex {
   type: string,
   shiny: boolean,
   username: string,
+  captured: number,
+  entries: number,
   pokemon: { number: string }[]
 }
 
@@ -95,6 +97,8 @@ export interface Database {
           type: string,
           shiny: boolean,
           username: string,
+          captured: number,
+          entries: number,
           pokemon: { number: string }[]
           data: Json | null
         }
@@ -106,6 +110,8 @@ export interface Database {
           type?: string,
           shiny?: boolean,
           username?: string,
+          captured?: number,
+          entries?: number,
           pokemon?: { number: string }[]
           data?: Json | null // nullable columns can be omitted
         }
@@ -117,6 +123,8 @@ export interface Database {
           type?: string,
           shiny?: boolean,
           username?: string,
+          captured?: number,
+          entries?: number,
           pokemon?: { number: string }[]
           data?: Json | null
         }

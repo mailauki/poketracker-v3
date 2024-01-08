@@ -36,6 +36,8 @@ export default async function ProfilePage({ params: { username } }: { params: { 
     type,
     shiny,
     username,
+    captured,
+    entries,
     pokemon (
       number
     )

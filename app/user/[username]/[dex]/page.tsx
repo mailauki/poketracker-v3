@@ -1,5 +1,5 @@
 import Loading from "@/app/loading"
-import DexHeader from "@/components/DexHeader"
+import DexHeader from "@/components/dex/DexHeader"
 import Main from "@/components/Main"
 import DexCard from "@/components/dex/DexCard"
 import Pokedexes from "@/components/pokemon/Pokedexes"
@@ -39,6 +39,8 @@ export default async function DexPage({ params: { username, dex } }: { params: {
     type,
     shiny,
     username,
+    captured,
+    entries,
     pokemon (
       number
     )
@@ -46,7 +48,7 @@ export default async function DexPage({ params: { username, dex } }: { params: {
   .match({ username: username })
   .ilike('title', dex.split("-").join(" "))
   // .returns<Dex>()
-  .limit(1)
+  // .limit(1)
   .single()
 
 

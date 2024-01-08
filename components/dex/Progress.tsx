@@ -1,11 +1,20 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Box, LinearProgress, Stack, Typography, useMediaQuery } from "@mui/material"
 
-export default function Progress() {
-  const [progress, setProgress] = useState(67.4)
+export default function Progress({ captured, entries }: { captured: number, entries: number }) {
+  const [progress, setProgress] = useState<number>(0)
   const matches = useMediaQuery('(max-width: 700px)')
+
+  useEffect(() => {
+    const percent = ((captured/entries) * 100)
+    if(String(percent).includes('.')) {
+      setProgress(Number(percent.toFixed(2)))
+    } else {
+      setProgress(percent)
+    }
+  }, [captured, entries])
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -24,7 +33,6 @@ export default function Progress() {
           alignItems='center'
           width='100%'
           height='100%'
-          // direction={{ xs: 'column', sm: 'row' }}
         >
           {matches ? (
             <Typography variant="overline" color="secondary.contrastText">
@@ -33,13 +41,13 @@ export default function Progress() {
           ) : (
             <Typography variant="overline" color="secondary.contrastText">
               <b>{progress}%</b> DONE!
-              (<b>408</b> CAUGHT, <b>197</b> TO GO)
+              (<b>{captured}</b> CAUGHT, <b>{entries-captured}</b> TO GO)
             </Typography>
           )}
         </Stack>
         {matches && (
           <Typography variant="overline">
-            (<b>408</b> CAUGHT, <b>197</b> TO GO)
+            (<b>{captured}</b> CAUGHT, <b>{entries-captured}</b> TO GO)
           </Typography>
         )}
       </Box>
