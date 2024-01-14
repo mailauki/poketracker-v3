@@ -1,7 +1,7 @@
 import Loading from "@/app/loading"
-import DexHeader from "@/components/dex/DexHeader"
+import DexHeader from "@/app/user/[username]/[dex]/DexHeader"
 import Main from "@/components/Main"
-import DexCard from "@/components/dex/DexCard"
+import DexCard from "@/app/user/[username]/DexCard"
 import Pokedexes from "@/components/pokemon/Pokedexes"
 import { createClient } from "@/utils/supabase/server"
 import { Dex, DexProps } from "@/utils/types"
@@ -10,9 +10,10 @@ import { QueryData } from "@supabase/supabase-js"
 import { Metadata } from "next"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import Pokedex from "@/components/pokemon/Pokedex"
-import PokedexContainer from "@/components/pokemon/PokedexContainer"
-import { getPokedexes } from "@/app/api/actions"
+import Pokedex from "@/app/user/[username]/[dex]/Pokedex"
+import PokedexContainer from "@/app/user/[username]/[dex]/PokedexContainer"
+import { getPokedexTabs } from "@/app/api/actions"
+import { useEffect } from "react"
 
 export const metadata: Metadata = {
   title: 'Dex',
@@ -26,13 +27,8 @@ export default async function DexPage({ params: { username, dex } }: { params: {
   const supabase = createClient(cookieStore)
 
   const { data: { session } } = await supabase.auth.getSession()
-  
-  if (!session) {
-    // this is a protected route - only users who are signed in can view this route
-    redirect('/login')
-  }
 
-  const { data: pokedex, error } = await supabase
+  const { data: pokedex } = await supabase
   .from('pokedexes')
   .select(`
     id,  
@@ -43,16 +39,14 @@ export default async function DexPage({ params: { username, dex } }: { params: {
     username,
     captured,
     entries,
+    hash,
     captured_pokemon (
-      number
-    ),
-    registered_pokemon (
       number
     )
   `)
   .match({ username: username })
-  .ilike('title', dex.split("-").join(" "))
-  // .returns<Dex>()
+  .eq('hash', dex)
+  .returns<Dex[]>()
   // .limit(1)
   .single()
 
@@ -64,12 +58,15 @@ export default async function DexPage({ params: { username, dex } }: { params: {
   const { data: game } = await supabase
   .from('games')
   .select()
-  .ilike('name', pokedex.game.split("-").join(" "))
+  .eq('hash', pokedex.game)
   .single()
 
-  // console.log(game)
-  const pokedexes = await getPokedexes(game)
+  const pokedexes = await getPokedexTabs(game)
   // const pokedexEntries = await getPokedexEntries(pokedex)
+  const entriesTotal = pokedexes?.reduce((total, pokedex) => {
+    const number = pokedex.entries
+    return total + number
+  }, 0)
 
   return (
     <Main>
@@ -77,7 +74,7 @@ export default async function DexPage({ params: { username, dex } }: { params: {
         <p>Dex Name: {dex}</p>
         <p>Username: {slug}</p> */}
         {/* <pre>{JSON.stringify(pokedex, null, 2)}</pre> */}
-        <DexHeader dex={pokedex} />
+        <DexHeader dex={pokedex} entries={entriesTotal} />
         {/* <Pokedexes
           game={pokedex.game}
           captured={pokedex.captured_pokemon}
@@ -88,7 +85,10 @@ export default async function DexPage({ params: { username, dex } }: { params: {
           captured={pokedex.captured_pokemon}
           // registered={pokedex.registered_pokemon}
         /> */}
-        <PokedexContainer pokedexes={pokedexes} captured={pokedex.captured_pokemon} />
+        <PokedexContainer
+          pokedexes={pokedexes!}
+          captured={pokedex.captured_pokemon}
+        />
     </Main>
   )
 }

@@ -4,11 +4,11 @@ import { useCallback, useEffect, useState } from 'react'
 import { Database } from '@/utils/types'
 import { Session, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Button, Container, TextField, Typography } from '@mui/material'
-import SignOut from './SignOutBtn'
+import SignOut from '../../components/auth/SignOutBtn'
 // import { createClient } from '@/utils/supabase/server'
 // import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/client'
-import AvatarForm from '../AvatarForm'
+import AvatarForm from './AvatarForm'
 
 export default function AccountForm({ session }: { session: Session | null }) {
   // const supabase = createClientComponentClient<Database>()

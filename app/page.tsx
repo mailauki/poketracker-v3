@@ -4,19 +4,8 @@ import Image from "next/image"
 import { Stack, Toolbar } from '@mui/material'
 import Main from '@/components/Main'
 import { useSearchParams } from 'next/navigation'
-import GameSelect from '@/components/dex/GameSelect'
+import GameSelect from '@/app/user/[username]/GameSelect'
 import { getGames } from './api/actions'
-
-export const metadata: Metadata = {
-  title: {
-    template: '%s | PokéTracker',
-    default: 'PokéTracker',
-  },
-  icons: {
-    // icon: '/pokeball.svg'
-    icon: '/pokeball-dark.png'
-  }
-}
 
 export default async function Home() {
   return (
@@ -34,7 +23,7 @@ export default async function Home() {
           className="svg-pokeball"
         />
 
-        <AuthButton />
+        {/* <AuthButton /> */}
       {/* </Stack> */}
       </div>
     </Main>

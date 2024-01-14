@@ -1,22 +1,22 @@
 'use client'
 
-import { useEffect, useState } from "react"
-import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, InputLabel, MenuItem, Radio, RadioGroup, Select, Stack, TextField } from "@mui/material"
+import { useCallback, useEffect, useState } from "react"
+import { Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormGroup, FormLabel, IconButton, InputLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, Stack, TextField } from "@mui/material"
 import { Close } from "@mui/icons-material"
 import { Game } from "@/utils/types"
 import { adjustName, hyphenate } from "@/utils/helper"
 import { createClient } from "@/utils/supabase/client"
-import { usePathname } from "next/navigation"
-import { addDex, getGames } from "@/app/api/actions"
+import { useParams, usePathname } from "next/navigation"
+import { addDex, getGames, getPokedexTabs } from "@/app/api/actions"
 import GameSelect from "./GameSelect"
-import CreateDexBtn from "./CreateDexBtn"
+import CreateDexBtn from "../../../components/dex/CreateDexBtn"
 
 export default function DexForm({ games }: { games: Game[] | null }) {
   // const [games, setGames] = useState<Array<Game>>([])
   const supabase = createClient()
   const [loading, setLoading] = useState(true)
   const [title, setTitle] = useState<string | null>(null)
-  const [game, setGame] = useState<string | null>('home')
+  const [game, setGame] = useState<string>('')
   const [type, setType] = useState<string | null>(null)
   const [shiny, setShiny] = useState<boolean>(false)
   const [entries, setEntries] = useState<number>(0)
@@ -111,13 +111,35 @@ export default function DexForm({ games }: { games: Game[] | null }) {
   //   }
   // }
 
+  // const entriesTotal = pokedexes.reduce((total, pokedex) => {
+  //   const number = pokedex.entries
+  //   return total + number
+  // }, 0)
+  const getDexes = useCallback(async () => {
+    const pokedexes = await getPokedexTabs(games?.find(g => g.hash == game)!)
+    const entriesTotal = pokedexes?.reduce((total, pokedex) => {
+      const number = pokedex.entries
+      return total + number
+    }, 0)
+    setEntries(entriesTotal!)
+    setPokedexId(games?.find(g => g.hash == game)?.pokedex!)
+  }, [game, games])
+
+  useEffect(() => {
+    getDexes()
+  }, [entries, pokedexId, getDexes])
+
+  const handleChangeGame = (event: SelectChangeEvent) => {
+    setGame(event.target.value as string)
+  }
+
   return (
     <>
       <Button
         variant='contained'
         size="large"
         onClick={handleClickOpen}
-        sx={{ mt: 3 }}
+        sx={{ mt: 4 }}
       >
         Create New Dex
       </Button>
@@ -157,13 +179,17 @@ export default function DexForm({ games }: { games: Game[] | null }) {
               label='Title'
               name='title'
               required
-              helperText={`${pathname}/${hyphenate(title! || "Living Dex")}`}
+              helperText={`${pathname}/${hyphenate(title?.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"") || "Living Dex")}`}
               placeholder="Living Dex"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
             />
 
-            <GameSelect games={games} />
+            <GameSelect
+              games={games}
+              game={game}
+              handleChangeGame={handleChangeGame}
+            />
             {/* <FormControl fullWidth>
               <InputLabel id="game-select-label">Game</InputLabel>
               <Select
@@ -194,7 +220,7 @@ export default function DexForm({ games }: { games: Game[] | null }) {
               </Select>
             </FormControl> */}
 
-            <FormControl>
+            <FormControl required>
               <FormLabel id="dex-type-label">Dex Type</FormLabel>
               <RadioGroup
                 row
@@ -203,9 +229,15 @@ export default function DexForm({ games }: { games: Game[] | null }) {
                 value={type}
                 onChange={(event) => setType(event.target.value)}
               >
-                <FormControlLabel value="National" control={<Radio />} label="National" />
-                <FormControlLabel value="Regional" control={<Radio />} label="Regional" />
-                <FormControlLabel value="Collective" control={<Radio />} label="Collective" />
+                {game == 'home' ? (
+                  <FormControlLabel value="National" control={<Radio />} label="National" />
+                ) : (
+                  games?.find(g => g.hash == game)?.DLC ? (
+                    <FormControlLabel value="Collective" control={<Radio />} label="Collective" />
+                  ) : (
+                    <FormControlLabel value="Regional" control={<Radio />} label="Regional" />
+                  )
+                )}
               </RadioGroup>
             </FormControl>
 
@@ -240,22 +272,21 @@ export default function DexForm({ games }: { games: Game[] | null }) {
             >
               Create
             </Button> */}
-            <CreateDexBtn />
+            {/* <CreateDexBtn /> */}
           </Stack>
         </DialogContent>
 
         <DialogActions>
-          {/* <Button
+          <Button
             variant='contained'
             fullWidth
             autoFocus
-            onClick={() => addDex({ title, game, type, shiny, entries, number: pokedexId })}
+            onClick={() => addDex({ title, game, type, shiny, entries, number: pokedexId, hash: `${hyphenate(title?.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"") || "Living Dex")}` })}
             size='large'
             sx={{ mt: 1, ml: 2, mb: 1, mr: 2 }}
           >
             Create
-          </Button> */}
-          {/* <CreateDexBtn /> */}
+          </Button>
         </DialogActions>
       </Dialog>
     </>

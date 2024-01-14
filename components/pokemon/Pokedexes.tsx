@@ -2,7 +2,7 @@
 
 import { Box, Container, Divider, Stack, Tab, Tabs } from "@mui/material"
 import { useEffect, useState } from "react"
-import PokeCard from "./PokeCard"
+import PokeCard from "../../app/user/[username]/[dex]/PokeCard"
 import { Pokedex, Pokemon, Captured } from "@/utils/types"
 import Loading from "@/app/loading"
 

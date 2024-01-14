@@ -16,12 +16,18 @@ const MenuProps = {
   }
 }
 
-export default function GameSelect({ games }: { games: Game[] | null }) {
-  const [game, setGame] = useState('')
+export default function GameSelect({
+  games, game, handleChangeGame
+}: {
+  games: Game[] | null,
+  game: string,
+  handleChangeGame: any
+}) {
+  // const [game, setGame] = useState('')
 
-  const handleChangeGame = (event: SelectChangeEvent) => {
-    setGame(event.target.value as string)
-  }
+  // const handleChangeGame = (event: SelectChangeEvent) => {
+  //   setGame(event.target.value as string)
+  // }
 
   return (
     <FormControl fullWidth required>
@@ -35,12 +41,12 @@ export default function GameSelect({ games }: { games: Game[] | null }) {
         onChange={handleChangeGame}
         MenuProps={MenuProps}
       >
-        {games!.map((game: { url: string, name: string }) => 
+        {games!.map((game: Game) => 
           <MenuItem
-            key={game.url}
-            value={hyphenate(game.name)}
+            key={game.id}
+            value={game.hash}
           >
-            {adjustName(game.name)}
+            {game.name}
           </MenuItem>
         )}
       </Select>

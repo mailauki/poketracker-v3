@@ -1,21 +1,20 @@
 // 'use client'
 
 import { Stack } from "@mui/material"
-import DexForm from "./DexForm"
 import DexCard from "./DexCard"
 import { Dex } from "@/utils/types"
+import DexHeader from "./[dex]/DexHeader"
 
-export default function DexContainer({ pokedexes }: { pokedexes: any }) {
+export default async function DexContainer({ dexes }: { dexes: Dex[] | null }) {
   return (
     <Stack spacing={6} sx={{ mt: 3 }}>
-      {pokedexes?.map((dex: Dex) => (
+      {dexes?.map((dex: Dex) => (
         <DexCard
           key={dex.id}
           dex={dex}
         />
+        // <DexHeader  />
       ))}
-    
-      {/* <DexForm /> */}
     </Stack>
   )
 }

@@ -10,6 +10,7 @@ import { Database, Dex, DexProps } from "@/utils/types"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import Loading from "@/app/loading"
 import Progress from "./Progress"
+import { getPokedexTabs } from "@/app/api/actions"
 
 export default function DexCard({ dex }: DexProps) {
   const [progress, setProgress] = useState(67.4)
@@ -47,6 +48,7 @@ export default function DexCard({ dex }: DexProps) {
   // }, [dex])
 
   if (!dex) return <Loading />
+  // console.log(dex)
 
   return (
     <Stack spacing={1} sx={{ width: '100%', height: '100%' }}>
@@ -55,11 +57,11 @@ export default function DexCard({ dex }: DexProps) {
           <Anchor
             variant="h5"
             noWrap
-            href={`${pathname}/${hyphenate(dex!.title)}`}
+            href={`${pathname}/${dex.hash}`}
           >
             {dex!.title || 'Dex Title'}
           </Anchor>
-          <IconButton size='small'>
+          <IconButton size='small' disabled>
             <Edit fontSize='small' />
           </IconButton>
         </Stack>

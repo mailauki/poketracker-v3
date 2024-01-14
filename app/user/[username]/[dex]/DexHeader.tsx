@@ -1,16 +1,39 @@
 'use client'
 
 import { Chip, Container, Link as Anchor, Stack, Typography, useMediaQuery, IconButton, Tooltip, Button, TextField } from "@mui/material"
-import DexCard from "./DexCard"
-import Progress from "./Progress"
+import Progress from "../Progress"
 import { adjustName } from "@/utils/helper"
 import { Star, IosShare as Share } from "@mui/icons-material"
-import { useParams } from "next/navigation"
+import { useParams, usePathname } from "next/navigation"
 import Link from "next/link"
+import { createClient } from "@/utils/supabase/client"
+import { useEffect } from "react"
 
-export default function DexHeader({ dex }: any) {
+export default function DexHeader({ dex, entries }: any) {
   const matches = useMediaQuery('(max-width: 700px)')
   const { username } = useParams()
+  const pathname = usePathname()
+  const supabase = createClient()
+
+  // useEffect(() => {
+  //   const channel = supabase
+  //     .channel('*')
+  //     .on(
+  //       'postgres_changes',
+  //       {
+  //         event: '*',
+  //         schema: 'public',
+  //         table: 'pokedexes',
+  //         filter: `hash=eq.${dex}`
+  //       },
+  //       (payload) => console.log(payload)
+  //     )
+  //     .subscribe()
+
+  //   return () => {
+  //     supabase.removeChannel(channel)
+  //   }
+  // }, [supabase, dex])
 
   return (
     <Container maxWidth='md' sx={{ pt: 2, mb: 3 }}>
@@ -37,7 +60,12 @@ export default function DexHeader({ dex }: any) {
           <Tooltip title={
             <Stack spacing={1} sx={{ p: 1 }}>
               <Typography>Share this Dex</Typography>
-              <Button variant="contained">Copy Link</Button>
+              <Button
+                variant="contained"
+                onClick={() => console.log(`https://poketracker-v3.vercel.app${pathname}`)}
+              >
+                Copy Link
+              </Button>
             </Stack>
           } arrow>
             <IconButton size="small">
@@ -46,7 +74,7 @@ export default function DexHeader({ dex }: any) {
           </Tooltip>
         </Stack>
 
-        <Progress captured={dex!.captured} entries={dex!.entries} />
+        <Progress captured={dex!.captured} entries={entries} />
       </Stack>
     </Container>
   )

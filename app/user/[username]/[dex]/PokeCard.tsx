@@ -7,10 +7,12 @@ import { Database, PokeProps, Sprites } from "@/utils/types"
 import Image from "next/image"
 import Loading from "@/app/loading"
 import { MoreVert } from "@mui/icons-material"
-import { createClient } from "@/utils/supabase/server"
-import { cookies } from "next/headers"
-import { createServerActionClient } from "@supabase/auth-helpers-nextjs"
+// import { createClient } from "@/utils/supabase/server"
+import { createClient } from "@/utils/supabase/client"
+// import { cookies } from "next/headers"
+// import { createServerActionClient } from "@supabase/auth-helpers-nextjs"
 import { useParams } from "next/navigation"
+import { addCapturedPokemon, removeCapturedPokemon } from "@/app/api/actions"
 
 export default function PokeCard({ pokemon, captured }: PokeProps) {
   const [sprites, setSprites] = useState<Sprites | undefined>(undefined)
@@ -18,13 +20,17 @@ export default function PokeCard({ pokemon, captured }: PokeProps) {
   const [isCaptured, setIsCaptured] = useState(captured!.find((mon: any) => mon.number === pokemon.pokemon_species.url.split('/')[6]) || false)
   const [number, setNumber] = useState(null)
   const { dex } = useParams()
+  const supabase = createClient()
 
   // console.log(pokemon.pokemon_species.url.split('/')[6])
   // console.log(captured)
+  // console.log({dex})
 
   function handleCapture() {
-    setIsCaptured(!isCaptured)
+    // setIsCaptured(!isCaptured)
     // console.log(pokemon.pokemon_species.url.split('/')[6])
+    if(isCaptured) removeCapturedPokemon({ number, dex })
+    else addCapturedPokemon({ number, dex })
   }
 
   useEffect(() => {
@@ -62,14 +68,34 @@ export default function PokeCard({ pokemon, captured }: PokeProps) {
   //   console.log({data})
   // }
 
+  // useEffect(() => {
+  //   const channel = supabase
+  //     .channel('*')
+  //     .on(
+  //       'postgres_changes',
+  //       {
+  //         event: '*',
+  //         schema: 'public',
+  //         table: 'pokedexes',
+  //         filter: `hash=eq.${dex}`
+  //       },
+  //       (payload) => console.log(payload)
+  //     )
+  //     .subscribe()
+
+  //   return () => {
+  //     supabase.removeChannel(channel)
+  //   }
+  // }, [supabase, dex])
+
   return (
     <Card
       sx={{ width: 150, height: 150, position: 'relative', borderColor: 'secondary.dark' }}
       // elevation={isCaptured ? 0 : 1}
       variant={isCaptured ? "outlined" : "elevation"}
       component="form"
-      action={isCaptured ? "/api/pokemon/remove" : "/api/pokemon/add"}
-      method="post"
+      // action={isCaptured ? "/api/pokemon/remove" : "/api/pokemon/add"}
+      // method="post"
     >
       <input
         name="number"
@@ -83,8 +109,9 @@ export default function PokeCard({ pokemon, captured }: PokeProps) {
       />
       <CardActionArea
         sx={{ width: '100%', height: '100%' }}
-        // onClick={handleCapture}
-        type="submit"
+        onClick={handleCapture}
+        // onClick={() => addCapturedPokemon({ number, dex })}
+        // type="submit"
       >
         <Box
           sx={{

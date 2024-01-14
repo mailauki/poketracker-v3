@@ -17,7 +17,8 @@ export interface Dex {
   username: string,
   captured: number,
   entries: number,
-  pokemon: { number: string }[]
+  hash: string;
+  captured_pokemon: { number: string }[]
 }
 
 export interface DexProps {
@@ -25,6 +26,8 @@ export interface DexProps {
 }
 
 export type Captured = { number: string }[]
+
+export type PokedexTab = { id: number, name: string, entries: number }[]
 
 export interface PokeProps {
   pokemon: Pokemon
@@ -42,9 +45,18 @@ export interface Sprites {
   front_shiny_female: string | null
 }
 
+// export interface Game {
+//   name: string,
+//   url: string
+// }
+
 export interface Game {
+  id: number,
   name: string,
-  url: string
+  pokedex: string,
+  entries: number,
+  DLC: boolean,
+  hash: string
 }
 
 export interface Pokedex {
