@@ -15,7 +15,7 @@ export default function DexContainer({ pokedexes }: { pokedexes: any }) {
         />
       ))}
     
-      <DexForm />
+      {/* <DexForm /> */}
     </Stack>
   )
 }

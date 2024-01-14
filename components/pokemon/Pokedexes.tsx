@@ -6,7 +6,11 @@ import PokeCard from "./PokeCard"
 import { Pokedex, Pokemon, Captured } from "@/utils/types"
 import Loading from "@/app/loading"
 
-export default function Pokedexes({ game, captured }: { game: string, captured: Captured }) {
+export default function Pokedexes({
+  game, captured, registered
+}: {
+  game: string, captured: Captured, registered: Captured
+}) {
   const [pokedexes, setPokedexes] = useState<Array<Pokedex>>([])
   const [pokedex, setPokedex] = useState<string>('')
   const [pokemonEntries, setPokemonEntries] = useState<Array<Pokemon>>([])

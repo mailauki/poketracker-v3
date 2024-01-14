@@ -10,6 +10,9 @@ import { QueryData } from "@supabase/supabase-js"
 import { Metadata } from "next"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import Pokedex from "@/components/pokemon/Pokedex"
+import PokedexContainer from "@/components/pokemon/PokedexContainer"
+import { getPokedexes } from "@/app/api/actions"
 
 export const metadata: Metadata = {
   title: 'Dex',
@@ -22,16 +25,15 @@ export default async function DexPage({ params: { username, dex } }: { params: {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  const { data: { session } } = await supabase.auth.getSession()
   
   if (!session) {
     // this is a protected route - only users who are signed in can view this route
     redirect('/login')
   }
 
-  const { data: pokedex, error } = await supabase.from('pokedexes')
+  const { data: pokedex, error } = await supabase
+  .from('pokedexes')
   .select(`
     id,  
     title,
@@ -41,7 +43,10 @@ export default async function DexPage({ params: { username, dex } }: { params: {
     username,
     captured,
     entries,
-    pokemon (
+    captured_pokemon (
+      number
+    ),
+    registered_pokemon (
       number
     )
   `)
@@ -56,6 +61,16 @@ export default async function DexPage({ params: { username, dex } }: { params: {
 
   // console.log(pokedex)
 
+  const { data: game } = await supabase
+  .from('games')
+  .select()
+  .ilike('name', pokedex.game.split("-").join(" "))
+  .single()
+
+  // console.log(game)
+  const pokedexes = await getPokedexes(game)
+  // const pokedexEntries = await getPokedexEntries(pokedex)
+
   return (
     <Main>
         {/* <h1>Dex Page</h1>
@@ -63,7 +78,17 @@ export default async function DexPage({ params: { username, dex } }: { params: {
         <p>Username: {slug}</p> */}
         {/* <pre>{JSON.stringify(pokedex, null, 2)}</pre> */}
         <DexHeader dex={pokedex} />
-      <Pokedexes game={pokedex.game} captured={pokedex.pokemon} />
+        {/* <Pokedexes
+          game={pokedex.game}
+          captured={pokedex.captured_pokemon}
+          registered={pokedex.registered_pokemon} 
+        /> */}
+        {/* <Pokedex
+          game={game}
+          captured={pokedex.captured_pokemon}
+          // registered={pokedex.registered_pokemon}
+        /> */}
+        <PokedexContainer pokedexes={pokedexes} captured={pokedex.captured_pokemon} />
     </Main>
   )
 }

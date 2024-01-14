@@ -4,6 +4,8 @@ import Image from "next/image"
 import { Stack, Toolbar } from '@mui/material'
 import Main from '@/components/Main'
 import { useSearchParams } from 'next/navigation'
+import GameSelect from '@/components/dex/GameSelect'
+import { getGames } from './api/actions'
 
 export const metadata: Metadata = {
   title: {
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
   }
 }
 
-export default function Home() {
+export default async function Home() {
   return (
     <Main>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '4rem', alignItems: 'center' }}>

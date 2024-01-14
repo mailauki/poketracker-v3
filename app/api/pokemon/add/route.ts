@@ -47,7 +47,7 @@ export async function POST(request: Request) {
 
   // const supabase = createServerActionClient<Database>({ cookies })
   const { data: pokemon } = await supabase
-  .from('pokemon')
+  .from('captured_pokemon')
   .insert({ number, pokedex: pokedex?.id, user_id: user?.id })
   .select()
   .single()

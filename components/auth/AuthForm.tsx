@@ -160,6 +160,7 @@ export default function AuthForm({
             <Button
               variant='contained'
               type='submit'
+              size='large'
             >
               Sign In
             </Button>
@@ -167,6 +168,7 @@ export default function AuthForm({
             <Button
               variant='contained'
               type='submit'
+              size='large'
             >
               Sign Up
             </Button>

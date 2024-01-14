@@ -99,7 +99,8 @@ export interface Database {
           username: string,
           captured: number,
           entries: number,
-          pokemon: { number: string }[]
+          captured_pokemon: { number: string }[],
+          registered_pokemon: { number: string }[]
           data: Json | null
         }
         Insert: {
@@ -112,7 +113,8 @@ export interface Database {
           username?: string,
           captured?: number,
           entries?: number,
-          pokemon?: { number: string }[]
+          captured_pokemon?: { number: string }[],
+          registered_pokemon?: { number: string }[]
           data?: Json | null // nullable columns can be omitted
         }
         Update: {
@@ -125,11 +127,35 @@ export interface Database {
           username?: string,
           captured?: number,
           entries?: number,
-          pokemon?: { number: string }[]
+          captured_pokemon?: { number: string }[],
+          registered_pokemon?: { number: string }[]
           data?: Json | null
         }
       },
-      pokemon: {
+      captured_pokemon: {
+        Row: {
+          // the data expected from .select()
+          id: number
+          number: string
+          pokedex: Key
+          data: Json | null
+        }
+        Insert: {
+          // the data to be passed to .insert()
+          id?: never // generated columns must not be supplied
+          number: string // `not null` columns with no default must be supplied
+          pokedex?: Key
+          data?: Json | null // nullable columns can be omitted
+        }
+        Update: {
+          // the data to be passed to .update()
+          id?: never
+          number?: string // `not null` columns are optional on .update()
+          pokedex?: Key
+          data?: Json | null
+        }
+      },
+      registered_pokemon: {
         Row: {
           // the data expected from .select()
           id: number

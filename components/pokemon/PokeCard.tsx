@@ -1,3 +1,5 @@
+'use client'
+
 import { Box, Card, CardActionArea, CardActions, CardHeader, CardMedia, IconButton, Paper, Stack, Typography } from "@mui/material"
 import { padZero } from "@/utils/helper"
 import { useEffect, useState } from "react"
@@ -22,7 +24,7 @@ export default function PokeCard({ pokemon, captured }: PokeProps) {
 
   function handleCapture() {
     setIsCaptured(!isCaptured)
-    console.log(pokemon.pokemon_species.url.split('/')[6])
+    // console.log(pokemon.pokemon_species.url.split('/')[6])
   }
 
   useEffect(() => {

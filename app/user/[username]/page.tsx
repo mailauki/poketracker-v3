@@ -8,7 +8,9 @@ import { Metadata } from "next"
 // import { createClient } from '@/utils/supabase/client'
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { Dex } from "@/utils/types"
+import { Dex, Game } from "@/utils/types"
+import DexForm from "@/components/dex/DexForm"
+import { getGames } from "@/app/api/actions"
 
 export const metadata: Metadata = {
   title: 'Account',
@@ -20,16 +22,16 @@ export default async function ProfilePage({ params: { username } }: { params: { 
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
+  const { data: { session } } = await supabase.auth.getSession()
   
   if (!session) {
     // this is a protected route - only users who are signed in can view this route
     redirect('/login')
   }
 
-  const { data: pokedexes } = await supabase.from('pokedexes').select(`
+  const { data: pokedexes } = await supabase
+  .from('pokedexes')
+  .select(`
     id,
     title,
     game,
@@ -38,11 +40,16 @@ export default async function ProfilePage({ params: { username } }: { params: { 
     username,
     captured,
     entries,
-    pokemon (
+    captured_pokemon (
+      number
+    ),
+    registered_pokemon (
       number
     )
   `).match({ username: username })
   // const { data } = await supabase.from('pokedexes').select()
+
+  const games = await getGames()
 
 
   return (
@@ -50,6 +57,8 @@ export default async function ProfilePage({ params: { username } }: { params: { 
       {/* <h1>User {params?.slug}</h1> */}
       {/* <pre>{JSON.stringify(pokedexes, null, 2)}</pre> */}
       <Profile username={username} pokedexes={pokedexes} />
+    
+      {session && <DexForm games={games} />}
     </Main>
   )
 }
